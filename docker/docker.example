@@ -1,0 +1,12 @@
+#------------------------------------------------------------------------------
+# Docker example
+#------------------------------------------------------------------------------
+
+docker run -d -p 8000:8000 \
+-e SELF_DB_CONFIG_DATABASE=garden \
+-e SELF_DB_CONFIG_HOST=192.168.86.128 \
+-e SELF_DB_CONFIG_USER=garden \
+-e SELF_DB_CONFIG_PASSWORD=12345678 \
+-e SELF_DB_CONFIG_PORT=3306 \
+--name oracle-service-broker \
+neunnhor/oracle-service-broker:v1.0
