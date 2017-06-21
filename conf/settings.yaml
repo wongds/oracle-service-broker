@@ -1,0 +1,31 @@
+# This file should not be used in deployed environments. Instead, set
+# the SETTINGS_PATH environment variable to point to a configuration
+# file that contains these settings.
+
+services:
+- name: oracle-service
+  id: 3102c871-1044-4716-a7dc-9ded2e028279
+  description: Oracle service for application development and testing
+  bindable: true
+  tags:
+    - oracle
+    - relational
+  metadata:
+    providerDisplayName: experimental
+    imageUrl: http://orvjyath1.bkt.clouddn.com/oracle.jpg
+    longDescription: Oracle service for application development and testing
+  plans:
+  - name: default
+    id: 2651da21-dc16-4c1a-ba6c-1c681a3dcdc1
+    description: Shared Oracle Server
+    free: true
+    bindable: true
+    metadata:
+     costs:
+     - amount:
+         min: 0.0
+         max: 1.0
+       unit: default
+     bullets:
+       - Shared Oracle server
+       - free storage

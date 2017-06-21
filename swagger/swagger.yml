@@ -10,8 +10,25 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 basePath: /v2
-paths: {}
+paths:
+  /catalog:
+    get:
+      tags:
+      - oracle-service-broker/controllersBrokersController
+      description: List broker catalogs and association plans.
+      operationId: BrokersController.List broker catalogs.
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/.map[string]string'
+        "400":
+          description: '{object} error'
+        "500":
+          description: '{object} error'
+definitions:
+  .map[string]string:
+    type: object
 tags:
-- name: oracle-service-broker/controllers/brokersBrokersController
+- name: oracle-service-broker/controllersBrokersController
   description: |
     Operations about Brokers
