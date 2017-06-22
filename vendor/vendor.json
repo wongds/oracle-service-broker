@@ -339,6 +339,25 @@
 			"revisionTime": "2017-06-16T19:49:15Z"
 		},
 		{
+			"checksumSHA1": "NYO7du7avPvJfq9EG0KoP5IrtSE=",
+			"path": "github.com/lib/pq",
+			"revision": "80f8150043c80fb52dee6bc863a709cdac7ec8f8",
+			"revisionTime": "2016-08-06T14:40:29Z"
+		},
+		{
+			"checksumSHA1": "K4XuhnpGWTFMLSDIdvDr5AH3fTw=",
+			"path": "github.com/lib/pq/oid",
+			"revision": "80f8150043c80fb52dee6bc863a709cdac7ec8f8",
+			"revisionTime": "2016-08-06T14:40:29Z"
+		},
+		{
+			"checksumSHA1": "3/QDVbkhMa3/YLdMVyHg0dnFIeM=",
+			"origin": "github.com/derekparker/delve/vendor/github.com/peterh/liner",
+			"path": "github.com/peterh/liner",
+			"revision": "ab7367ed2bf15044f7bca97147a802f77b875797",
+			"revisionTime": "2017-03-13T17:59:34Z"
+		},
+		{
 			"checksumSHA1": "H2ZvmkbJ9YyhyaVc3YSYVTJlNGU=",
 			"path": "github.com/smartystreets/assertions",
 			"revision": "2063fd1cc7c975db70502811a34b06ad034ccdf2",
@@ -375,10 +394,50 @@
 			"revisionTime": "2016-08-23T18:01:44Z"
 		},
 		{
+			"checksumSHA1": "8zT7g89vxUOnihh17WQlggLjUwQ=",
+			"origin": "github.com/derekparker/delve/vendor/golang.org/x/debug/dwarf",
+			"path": "golang.org/x/debug/dwarf",
+			"revision": "ab7367ed2bf15044f7bca97147a802f77b875797",
+			"revisionTime": "2017-03-13T17:59:34Z"
+		},
+		{
+			"checksumSHA1": "HWrqKHOP90vBKTok3b8XqNRyu+k=",
+			"origin": "github.com/derekparker/delve/vendor/golang.org/x/debug/elf",
+			"path": "golang.org/x/debug/elf",
+			"revision": "ab7367ed2bf15044f7bca97147a802f77b875797",
+			"revisionTime": "2017-03-13T17:59:34Z"
+		},
+		{
+			"checksumSHA1": "3srriiwLffwyWbOoe4H0iHW8TOA=",
+			"origin": "github.com/derekparker/delve/vendor/golang.org/x/debug/macho",
+			"path": "golang.org/x/debug/macho",
+			"revision": "ab7367ed2bf15044f7bca97147a802f77b875797",
+			"revisionTime": "2017-03-13T17:59:34Z"
+		},
+		{
+			"checksumSHA1": "NIg5qnKx/D8Th7YX882++siXTDY=",
+			"path": "golang.org/x/sys/unix",
+			"revision": "131454b5606f5f11f6926156504d8ec772484f1d",
+			"revisionTime": "2015-09-10T19:29:23Z"
+		},
+		{
+			"checksumSHA1": "w/oQQFHCnE+S+2g5D62nfY8aDuQ=",
+			"path": "golang.org/x/sys/unix",
+			"revision": "62bee037599929a6e9146f29d10dd5208c43507d",
+			"revisionTime": "2016-06-14T22:52:37Z"
+		},
+		{
 			"checksumSHA1": "o+/RO825o3ieEN5ohMpCWLovzlU=",
 			"path": "gopkg.in/yaml.v2",
 			"revision": "31c299268d302dd0aa9a0dcf765a3d58971ac83f",
 			"revisionTime": "2016-09-12T16:56:03Z"
+		},
+		{
+			"checksumSHA1": "CrnDzZBgyZBaggjrxna5yY5Jh5g=",
+			"origin": "github.com/derekparker/delve/vendor/rsc.io/x86/x86asm",
+			"path": "rsc.io/x86/x86asm",
+			"revision": "ab7367ed2bf15044f7bca97147a802f77b875797",
+			"revisionTime": "2017-03-13T17:59:34Z"
 		}
 	],
 	"rootPath": "oracle-service-broker"
