@@ -2,7 +2,7 @@ FROM golang:1.7.5
 
 MAINTAINER zhaozy@neunn.com
 
-RUN mkdir -p /go/src/oracle-service-broker/ &&
+RUN mkdir -p /go/src/oracle-service-broker/
 
 COPY . /go/src/oracle-service-broker/
 WORKDIR /go/src/oracle-service-broker/
