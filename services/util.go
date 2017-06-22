@@ -1,15 +1,16 @@
 package services
 
 import (
+	"fmt"
 	"io/ioutil"
 
 	"github.com/astaxie/beego"
 	"github.com/golang/glog"
 	"github.com/ghodss/yaml"
-	"github.com/pivotal-cf/brokerapi"
+	"github.com/kubernetes-incubator/service-catalog/pkg/brokerapi"
 )
 
-func ReadBrokerSettings() *brokerapi.CatalogResponse {
+func readBrokerSettings() *brokerapi.Catalog {
 	section, _ := beego.AppConfig.GetSection("oracle-service-broker")
 
 	bytes, err := ioutil.ReadFile(section["settings.path"])
@@ -18,7 +19,7 @@ func ReadBrokerSettings() *brokerapi.CatalogResponse {
 		glog.Fatalln("load settings.yaml error...", err.Error())
 	}
 
-	broker := &brokerapi.CatalogResponse{
+	broker := &brokerapi.Catalog{
 
 	}
 
@@ -28,4 +29,12 @@ func ReadBrokerSettings() *brokerapi.CatalogResponse {
 	}
 
 	return broker
+}
+
+func generateOracleUri(username, password, address, sid string) string {
+	return fmt.Sprintf("%s:%s@%s/%s", username, password, address, sid)
+}
+
+func generateOracleUriWithSid(username, password, addressWithSid string) string {
+	return fmt.Sprintf("%s:%s@%s", username, password, addressWithSid)
 }

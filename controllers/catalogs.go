@@ -1,15 +1,14 @@
 package controllers
 
 import (
-
 	"oracle-service-broker/services"
 
 	"github.com/astaxie/beego"
 	"github.com/golang/glog"
 )
 
-// Operations about Brokers
-type BrokersController struct {
+// Operations about Catalogs
+type CatalogsController struct {
 	beego.Controller
 }
 
@@ -18,14 +17,13 @@ type BrokersController struct {
 // @Success 200 {object} map[string]string
 // @Failure 400 {object} error
 // @Failure 500 {object} error
-// @router /catalog [get]
-func (b *BrokersController) Catalog() {
-
-	catalog := services.ReadBrokerSettings()
+// @router / [get]
+func (c *CatalogsController) Catalogs() {
+	catalog := services.OracleServiceBrokerInstance().Catalog()
 
 	glog.Info(catalog)
 
-	b.Data["json"] = catalog
+	c.Data["json"] = catalog
 
-	b.ServeJSON()
+	c.ServeJSON()
 }

@@ -1,55 +1,120 @@
 package services
 
 import (
-	"context"
+	"encoding/json"
+	"errors"
+	"sync"
 
-	"github.com/pivotal-cf/brokerapi"
+	"github.com/golang/glog"
+	"github.com/kubernetes-incubator/service-catalog/pkg/brokerapi"
 )
 
-type ServiceBroker interface {
-	DoProvision(context context.Context, instanceID string, details brokerapi.ProvisionDetails, asyncAllowed bool) (brokerapi.ProvisionedServiceSpec, error)
-	DoDeProvision(context context.Context, instanceID string, details brokerapi.DeprovisionDetails, asyncAllowed bool) (brokerapi.DeprovisionServiceSpec, error)
-	DoBind(context context.Context, instanceID, bindingID string, details brokerapi.BindDetails) (brokerapi.Binding, error)
-	DoUnbind(context context.Context, instanceID, bindingID string, details brokerapi.UnbindDetails) error
-	DoUpdate(context context.Context, instanceID string, details brokerapi.UpdateDetails, asyncAllowed bool) (brokerapi.UpdateServiceSpec, error)
-	DoLastOperation(context context.Context, instanceID, operationData string) (brokerapi.LastOperation, error)
-	DoServices(context context.Context) []brokerapi.Service
+var (
+	oracleServiceBroker *OracleServiceBroker
+)
+
+type OracleServiceBroker struct {
+	rwMutex sync.RWMutex
+	//TODO: Need to be replace by etcd v3.
+	instanceMap map[string]*userProvidedServiceInstance
 }
 
-type ServiceBrokerHandler struct {
-	handler ServiceBroker
+func OracleServiceBrokerInstance() *OracleServiceBroker {
+	if oracleServiceBroker == nil {
+		//TODO: Need to be replace by etcd v3.
+		var instanceMap = make(map[string]*userProvidedServiceInstance)
+		oracleServiceBroker = &OracleServiceBroker{
+			instanceMap: instanceMap,
+		}
+	}
+	return oracleServiceBroker
 }
 
-func (s *ServiceBrokerHandler) DoProvision(context context.Context, instanceID string, details brokerapi.ProvisionDetails,
-	asyncAllowed bool) (brokerapi.ProvisionedServiceSpec, error) {
-	return s.handler.DoProvision(context, instanceID, details, asyncAllowed)
+func (o *OracleServiceBroker) Catalog() *brokerapi.Catalog {
+	return readBrokerSettings()
 }
 
-func (s *ServiceBrokerHandler) DoDeProvision(context context.Context, instanceID string, details brokerapi.DeprovisionDetails,
-	asyncAllowed bool) (brokerapi.DeprovisionServiceSpec, error) {
-	return s.handler.DoDeProvision(context, instanceID, details, asyncAllowed)
+func (o *OracleServiceBroker) ServiceInstance(id string) (string, error) {
+	result := ""
+
+	//TODO: Need to be replace by etcd v3.
+	if _, ok := o.instanceMap[id]; ok {
+		result = id
+	}
+
+	glog.Info("instance map len :", len(o.instanceMap))
+	glog.Info("instance map :", o.instanceMap)
+
+	return result, nil
 }
 
-func (s *ServiceBrokerHandler) DoBind(context context.Context, instanceID, bindingID string,
-	details brokerapi.BindDetails) (brokerapi.Binding, error) {
-	return s.handler.DoBind(context, instanceID, bindingID, details)
+func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceInstanceRequest) (*brokerapi.CreateServiceInstanceResponse, error) {
+	o.rwMutex.Lock()
+	defer o.rwMutex.Unlock()
+
+	credential, ok := req.Parameters["credentials"]
+
+	if !ok {
+		o.instanceMap[id] = &userProvidedServiceInstance{
+			Name: id,
+			Credential: &brokerapi.Credential{
+				"special-key-1": "special-value-1",
+				"special-key-2": "special-value-2",
+			},
+		}
+	} else {
+		jsonCred, err := json.Marshal(credential)
+		if err != nil {
+			glog.Errorf("Failed to marshal credentials: %v", err)
+			return nil, err
+		}
+		var cred brokerapi.Credential
+		err = json.Unmarshal(jsonCred, &cred)
+		o.instanceMap[id] = &userProvidedServiceInstance{
+			Name:       id,
+			Credential: &cred,
+		}
+	}
+
+	glog.Info("instance map len :", len(o.instanceMap))
+	glog.Info("instance map :", o.instanceMap)
+
+	return &brokerapi.CreateServiceInstanceResponse{
+		Operation: "Provision",
+	}, nil
 }
 
-func (s *ServiceBrokerHandler) DoUnbind(context context.Context, instanceID, bindingID string,
-	details brokerapi.UnbindDetails) error {
-	return s.handler.DoUnbind(context, instanceID, bindingID, details)
+func (o *OracleServiceBroker) DeProvision(id string) (*brokerapi.DeleteServiceInstanceResponse, error) {
+	o.rwMutex.Lock()
+	defer o.rwMutex.Unlock()
+
+	//TODO: Need to be replace by etcd v3.
+	_, ok := o.instanceMap[id]
+
+	if ok {
+		delete(o.instanceMap, id)
+		return &brokerapi.DeleteServiceInstanceResponse{}, nil
+	}
+
+	return &brokerapi.DeleteServiceInstanceResponse{
+		Operation: "DeProvision",
+	}, nil
 }
 
-func (s *ServiceBrokerHandler) DoUpdate(context context.Context, instanceID string, details brokerapi.UpdateDetails,
-	asyncAllowed bool) (brokerapi.UpdateServiceSpec, error) {
-	return s.handler.DoUpdate(context, instanceID, details, asyncAllowed)
+func (o *OracleServiceBroker) Binding(instanceID, bindingID string, req *brokerapi.BindingRequest) (*brokerapi.CreateServiceBindingResponse, error) {
+	o.rwMutex.RLock()
+	defer o.rwMutex.RUnlock()
+
+	//TODO: Need to be replace by etcd v3.
+	instance, ok := o.instanceMap[instanceID]
+	if !ok {
+		return nil, errors.New("no such instance: " + instanceID)
+	}
+	cred := instance.Credential
+	return &brokerapi.CreateServiceBindingResponse{Credentials: *cred}, nil
 }
 
-func (s *ServiceBrokerHandler) DoLastOperation(context context.Context, instanceID,
-	operationData string) (brokerapi.LastOperation, error) {
-	return s.handler.DoLastOperation(context, instanceID, operationData)
-}
-
-func (s *ServiceBrokerHandler) DoServices(context context.Context) []brokerapi.Service {
-	return s.handler.DoServices(context)
+func (o *OracleServiceBroker) UnBinding(instanceId, bindingId string) error {
+	// Since we don't persist the binding, there's nothing to do here.
+	return nil
 }
