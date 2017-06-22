@@ -9,6 +9,12 @@
 			"revisionTime": "2017-03-06T13:59:04Z"
 		},
 		{
+			"checksumSHA1": "q+JS4o3BZZicnP8yJcsSUUrEecY=",
+			"path": "github.com/astaxie/beego/cache",
+			"revision": "323a1c4214101331a4b71922c23d19b7409ac71f",
+			"revisionTime": "2017-03-06T13:59:04Z"
+		},
+		{
 			"checksumSHA1": "s8iEWXUIYYvTpRRGtAFtR2XzMJ4=",
 			"path": "github.com/astaxie/beego/config",
 			"revision": "323a1c4214101331a4b71922c23d19b7409ac71f",
@@ -33,6 +39,12 @@
 			"revisionTime": "2017-03-06T13:59:04Z"
 		},
 		{
+			"checksumSHA1": "CB9m/0Vzo6u3ui2GqD8WppvqxHs=",
+			"path": "github.com/astaxie/beego/orm",
+			"revision": "323a1c4214101331a4b71922c23d19b7409ac71f",
+			"revisionTime": "2017-03-06T13:59:04Z"
+		},
+		{
 			"checksumSHA1": "dBz3/pEfzClj/dZbvIu8Iljj5xo=",
 			"path": "github.com/astaxie/beego/plugins/cors",
 			"revision": "323a1c4214101331a4b71922c23d19b7409ac71f",
@@ -41,6 +53,12 @@
 		{
 			"checksumSHA1": "8lykewinegySOlOMlX3KbpsfDOs=",
 			"path": "github.com/astaxie/beego/session",
+			"revision": "323a1c4214101331a4b71922c23d19b7409ac71f",
+			"revisionTime": "2017-03-06T13:59:04Z"
+		},
+		{
+			"checksumSHA1": "R13UeUO54M8HMb7dCad/lVez73g=",
+			"path": "github.com/astaxie/beego/swagger",
 			"revision": "323a1c4214101331a4b71922c23d19b7409ac71f",
 			"revisionTime": "2017-03-06T13:59:04Z"
 		},
@@ -55,6 +73,138 @@
 			"path": "github.com/astaxie/beego/utils",
 			"revision": "323a1c4214101331a4b71922c23d19b7409ac71f",
 			"revisionTime": "2017-03-06T13:59:04Z"
+		},
+		{
+			"checksumSHA1": "QlwLEb9oMgoI+8jcfl6LSeegk08=",
+			"path": "github.com/beego/bee",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "ZdhDvb+/ZjVnfJuEvv+pq86tMII=",
+			"path": "github.com/beego/bee/cmd",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "5ZfOw6lZNBRfWlZTQPeL3DRxD9A=",
+			"path": "github.com/beego/bee/cmd/commands",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "7k8eYWMPxHywmrgoVn4uxw/82GQ=",
+			"path": "github.com/beego/bee/cmd/commands/api",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "N0G7O7FhbBLRwhowfBwVVVr4k7s=",
+			"path": "github.com/beego/bee/cmd/commands/bale",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "EJquwp2GTahaylArkIMjqmvzMoM=",
+			"path": "github.com/beego/bee/cmd/commands/beefix",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "c2c4G9sdgfVK3UXDAleRYL9O+Xo=",
+			"path": "github.com/beego/bee/cmd/commands/dlv",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "xKj8TzNOpYXfrMrQwufWhvWqYeE=",
+			"path": "github.com/beego/bee/cmd/commands/dockerize",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "wo9vOShrb02VJ92TnOR/2czX+2k=",
+			"path": "github.com/beego/bee/cmd/commands/generate",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "DVhsvVdIn3+9QQIL7IjBtXGd4JQ=",
+			"path": "github.com/beego/bee/cmd/commands/hprose",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "dt3f6fSgwDz1FmeNb/yFrN7IjhA=",
+			"path": "github.com/beego/bee/cmd/commands/migrate",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "hpW51u7qoVETJ4IEq/PJnFWCqsk=",
+			"path": "github.com/beego/bee/cmd/commands/new",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "LEEFch0gFci0vgsvAwokQU3Jwmg=",
+			"path": "github.com/beego/bee/cmd/commands/pack",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "UEqWp1u/Nv3gaoa4NT7pkEmpIRk=",
+			"path": "github.com/beego/bee/cmd/commands/rs",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "rRE6aS4GioNNwyMWgCH1VNpxz0Q=",
+			"path": "github.com/beego/bee/cmd/commands/run",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "oehPMep1y3yFqqbGthhR5NgA7Iw=",
+			"path": "github.com/beego/bee/cmd/commands/version",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "2NLcRpnCezFlCpOEz0ACOr05nvk=",
+			"path": "github.com/beego/bee/config",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "CZuu19zkVArTyHGzO3DWOUgLrkQ=",
+			"path": "github.com/beego/bee/generate",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "otU/JJP9pOhhfox3jUPpwFZAsyg=",
+			"path": "github.com/beego/bee/generate/swaggergen",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "rl+sF+z9X1f/mby9XjKktQ36V7A=",
+			"path": "github.com/beego/bee/logger",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "pVBfVbR7FS1NpCRirfnobsiDkA8=",
+			"path": "github.com/beego/bee/logger/colors",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
+		},
+		{
+			"checksumSHA1": "JGxR+f5ZNznaScJYQ3/nzhGlrOA=",
+			"path": "github.com/beego/bee/utils",
+			"revision": "1a79d6dcca0cfa714895f86f62ed9061e55e4914",
+			"revisionTime": "2017-04-24T14:00:49Z"
 		},
 		{
 			"checksumSHA1": "qMfHoCwxFBpvKM/DQ0a/QWoV3ZA=",
