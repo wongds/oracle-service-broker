@@ -21,8 +21,6 @@ type CatalogsController struct {
 func (c *CatalogsController) Catalogs() {
 	catalog := services.OracleServiceBrokerInstance().Catalog()
 
-	glog.Info(catalog)
-
 	c.Data["json"] = catalog
 
 	c.ServeJSON()
