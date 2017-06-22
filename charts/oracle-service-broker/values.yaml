@@ -2,4 +2,4 @@
 # Image to use
 image: neunnsy/oracle-service-broker:v0.0.1
 # ImagePullPolicy; valid values are "IfNotPresent", "Never", and "Always"
-imagePullPolicy: Always
+imagePullPolicy: IfNotPresent
