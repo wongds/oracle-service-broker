@@ -207,16 +207,124 @@
 			"revisionTime": "2017-04-24T14:00:49Z"
 		},
 		{
+			"checksumSHA1": "YDcw8B6etdsVbfS2bYOSx4gp0dM=",
+			"path": "github.com/derekparker/delve/config",
+			"revision": "449b276fe1ce7e20a0c7ffffbdd47d97f40022a1",
+			"revisionTime": "2017-01-11T19:37:04Z"
+		},
+		{
+			"checksumSHA1": "VsQqPaChwk/E0sCEj4GoYtboy0E=",
+			"path": "github.com/derekparker/delve/dwarf/frame",
+			"revision": "449b276fe1ce7e20a0c7ffffbdd47d97f40022a1",
+			"revisionTime": "2017-01-11T19:37:04Z"
+		},
+		{
+			"checksumSHA1": "kSiofmSaNoZtPHGKbaiVPF7TXZ4=",
+			"path": "github.com/derekparker/delve/dwarf/line",
+			"revision": "449b276fe1ce7e20a0c7ffffbdd47d97f40022a1",
+			"revisionTime": "2017-01-11T19:37:04Z"
+		},
+		{
+			"checksumSHA1": "kDnW3Xr3sIIFl/dFb4yAG8y9gYQ=",
+			"path": "github.com/derekparker/delve/dwarf/op",
+			"revision": "449b276fe1ce7e20a0c7ffffbdd47d97f40022a1",
+			"revisionTime": "2017-01-11T19:37:04Z"
+		},
+		{
+			"checksumSHA1": "/1jo+LNk/HAjIkvxxbNMBj1oddw=",
+			"path": "github.com/derekparker/delve/dwarf/reader",
+			"revision": "449b276fe1ce7e20a0c7ffffbdd47d97f40022a1",
+			"revisionTime": "2017-01-11T19:37:04Z"
+		},
+		{
+			"checksumSHA1": "HpQq3fmQPWiKk+qDMsJy6oW2ZHM=",
+			"path": "github.com/derekparker/delve/dwarf/util",
+			"revision": "449b276fe1ce7e20a0c7ffffbdd47d97f40022a1",
+			"revisionTime": "2017-01-11T19:37:04Z"
+		},
+		{
+			"checksumSHA1": "WQ4g4SjnzaYaSCF7TAn9m5dN9Sk=",
+			"path": "github.com/derekparker/delve/proc",
+			"revision": "449b276fe1ce7e20a0c7ffffbdd47d97f40022a1",
+			"revisionTime": "2017-01-11T19:37:04Z"
+		},
+		{
+			"checksumSHA1": "oo+0ctSDTqVRQHPeaCqGIbQEx1w=",
+			"path": "github.com/derekparker/delve/service",
+			"revision": "449b276fe1ce7e20a0c7ffffbdd47d97f40022a1",
+			"revisionTime": "2017-01-11T19:37:04Z"
+		},
+		{
+			"checksumSHA1": "EEcmYBxvg2nnlpJhXFXKezF8HWI=",
+			"path": "github.com/derekparker/delve/service/api",
+			"revision": "449b276fe1ce7e20a0c7ffffbdd47d97f40022a1",
+			"revisionTime": "2017-01-11T19:37:04Z"
+		},
+		{
+			"checksumSHA1": "JNHeeRtE982r8sZ2kU/0edgp9GM=",
+			"path": "github.com/derekparker/delve/service/debugger",
+			"revision": "449b276fe1ce7e20a0c7ffffbdd47d97f40022a1",
+			"revisionTime": "2017-01-11T19:37:04Z"
+		},
+		{
+			"checksumSHA1": "5LC35JjP0E6fJ81duK8IMclJuw4=",
+			"path": "github.com/derekparker/delve/service/rpc1",
+			"revision": "449b276fe1ce7e20a0c7ffffbdd47d97f40022a1",
+			"revisionTime": "2017-01-11T19:37:04Z"
+		},
+		{
+			"checksumSHA1": "DdvNBEt73u+i76EveN/q671LCw0=",
+			"path": "github.com/derekparker/delve/service/rpc2",
+			"revision": "449b276fe1ce7e20a0c7ffffbdd47d97f40022a1",
+			"revisionTime": "2017-01-11T19:37:04Z"
+		},
+		{
+			"checksumSHA1": "84tZN8QKn/arL9JDXZmML+Y6Z7o=",
+			"path": "github.com/derekparker/delve/service/rpccommon",
+			"revision": "449b276fe1ce7e20a0c7ffffbdd47d97f40022a1",
+			"revisionTime": "2017-01-11T19:37:04Z"
+		},
+		{
+			"checksumSHA1": "0gK6NITprwETW/Ea/h++/2bDPKQ=",
+			"path": "github.com/derekparker/delve/terminal",
+			"revision": "449b276fe1ce7e20a0c7ffffbdd47d97f40022a1",
+			"revisionTime": "2017-01-11T19:37:04Z"
+		},
+		{
+			"checksumSHA1": "m84ve3O+2NvRAupU8IvzXmM8naY=",
+			"path": "github.com/derekparker/delve/version",
+			"revision": "449b276fe1ce7e20a0c7ffffbdd47d97f40022a1",
+			"revisionTime": "2017-01-11T19:37:04Z"
+		},
+		{
+			"checksumSHA1": "NcUSqemYhygiMcCShH4W1LMm9Eo=",
+			"path": "github.com/fsnotify/fsnotify",
+			"revision": "fd9ec7deca8bf46ecd2a795baaacf2b3a9be1197",
+			"revisionTime": "2016-10-26T20:31:22Z"
+		},
+		{
 			"checksumSHA1": "qMfHoCwxFBpvKM/DQ0a/QWoV3ZA=",
 			"path": "github.com/ghodss/yaml",
 			"revision": "04f313413ffd65ce25f2541bfd2b2ceec5c0908c",
 			"revisionTime": "2016-12-07T00:33:20Z"
 		},
 		{
+			"checksumSHA1": "cT/dcEd4iioWi6q/Pi8sTF9gHiE=",
+			"path": "github.com/go-sql-driver/mysql",
+			"revision": "3654d25ec346ee8ce71a68431025458d52a38ac0",
+			"revisionTime": "2016-06-02T00:10:21Z"
+		},
+		{
 			"checksumSHA1": "Y27Agdpf4FN4HGANJ8cp8+Q6VO4=",
 			"path": "github.com/golang/glog",
 			"revision": "23def4e6c14b4da8ac2ed8007337bc5eb5007998",
 			"revisionTime": "2016-01-25T20:49:56Z"
+		},
+		{
+			"checksumSHA1": "CXpAqnmPYQVlBd6USGqqavFdP+g=",
+			"path": "github.com/gorilla/websocket",
+			"revision": "b258b4fadb573ac412f187b9f31974ea99d32f50",
+			"revisionTime": "2017-03-02T22:46:13Z"
 		},
 		{
 			"checksumSHA1": "VcR5ZBXeogG9PycizBURUU0LmXQ=",
