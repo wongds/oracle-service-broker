@@ -1,4 +1,4 @@
-FROM golang:1.7.5
+FROM neunnsy/oracle-service-broker:11.2
 
 MAINTAINER zhaozy@neunn.com
 
