@@ -74,11 +74,11 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 		}
 
 		//TODO: Need read from settings.yaml
-		databaseName, userName, userPassword, err := createDatabaseAndUser(connectURI, "20M", false)
+		databaseName, userName, userPassword, err := createDatabaseAndUser(connectURI.(string), "20M", false)
 		if err != nil {
 			return nil, errors.New("CRUD - Create database and user error.")
 		}
-		DashboardURL = generateOracleUri(userName, userPassword, connectURI, databaseName)
+		DashboardURL = generateOracleUri(userName, userPassword, connectURI.(string), databaseName)
 
 		(*cred)["gen_database"] = databaseName
 		(*cred)["gen_username"] = userName
@@ -86,7 +86,7 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 
 		o.instanceMap[id] = &userProvidedServiceInstance{
 			Name:       id,
-			Credential: &cred,
+			Credential: cred,
 		}
 	}
 
@@ -121,7 +121,7 @@ func (o *OracleServiceBroker) DeProvision(id string) (*brokerapi.DeleteServiceIn
 			return nil, errors.New("Parameters cann't to be obtain \\'gen_username\\'")
 		}
 
-		err := deleteDatabaseAndUser(connectURI, databaseName, userName)
+		err := deleteDatabaseAndUser(connectURI.(string), databaseName, userName)
 		if err != nil {
 			return nil, errors.New("CRUD - Delete database and user error.")
 		}
