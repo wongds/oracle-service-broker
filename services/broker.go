@@ -121,7 +121,7 @@ func (o *OracleServiceBroker) DeProvision(id string) (*brokerapi.DeleteServiceIn
 			return nil, errors.New("Parameters cann't to be obtain \\'gen_username\\'")
 		}
 
-		err := deleteDatabaseAndUser(connectURI.(string), databaseName, userName)
+		err := deleteDatabaseAndUser(connectURI.(string), databaseName.(string), userName.(string))
 		if err != nil {
 			return nil, errors.New("CRUD - Delete database and user error.")
 		}
