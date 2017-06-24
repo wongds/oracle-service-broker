@@ -11,7 +11,7 @@ RUN cp -r /go/src/oracle-service-broker/vendor/* /go/src/ && \
     chmod 755 /go/src/oracle-service-broker/docker/run.sh && \
     go install -a -v github.com/beego/bee
 
-ENV PKG_CONFIG_PATH /root/instantclient_11_2
+ENV PKG_CONFIG_PATH /root
 
 EXPOSE 8000
 
