@@ -94,7 +94,6 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 
 	return &brokerapi.CreateServiceInstanceResponse{
 		Operation: "Provision",
-		//TODO: DashboardURL
 		DashboardURL: DashboardURL,
 	}, nil
 }
