@@ -351,6 +351,12 @@
 			"revisionTime": "2016-08-06T14:40:29Z"
 		},
 		{
+			"checksumSHA1": "0OnHXH0xgB/SjEndMPG7lwUYGeQ=",
+			"path": "github.com/mattn/go-oci8",
+			"revision": "a406da5749859419ebd8b7ad51c8833e9a64e719",
+			"revisionTime": "2017-06-14T11:06:30Z"
+		},
+		{
 			"checksumSHA1": "3/QDVbkhMa3/YLdMVyHg0dnFIeM=",
 			"origin": "github.com/derekparker/delve/vendor/github.com/peterh/liner",
 			"path": "github.com/peterh/liner",
@@ -413,6 +419,10 @@
 			"path": "golang.org/x/debug/macho",
 			"revision": "ab7367ed2bf15044f7bca97147a802f77b875797",
 			"revisionTime": "2017-03-13T17:59:34Z"
+		},
+		{
+			"path": "golang.org/x/net/context",
+			"revision": ""
 		},
 		{
 			"checksumSHA1": "NIg5qnKx/D8Th7YX882++siXTDY=",

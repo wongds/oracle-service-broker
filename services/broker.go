@@ -52,16 +52,12 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 	o.rwMutex.Lock()
 	defer o.rwMutex.Unlock()
 
+	DashboardURL := ""
+
 	credential, ok := req.Parameters["credentials"]
 
 	if !ok {
-		o.instanceMap[id] = &userProvidedServiceInstance{
-			Name: id,
-			Credential: &brokerapi.Credential{
-				"special-key-1": "special-value-1",
-				"special-key-2": "special-value-2",
-			},
-		}
+		return nil, errors.New("Parameters need to be provided \\'credential\\'")
 	} else {
 		jsonCred, err := json.Marshal(credential)
 		if err != nil {
@@ -70,6 +66,23 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 		}
 		var cred brokerapi.Credential
 		err = json.Unmarshal(jsonCred, &cred)
+
+		connectURI := cred["connect_uri"]
+		if connectURI == "" {
+			return nil, errors.New("Parameters need to be provided \\'connect_uri\\'")
+		}
+
+		//TODO: Need read from settings.yaml
+		databaseName, userName, userPassword, err := createDatabaseAndUser(connectURI, "20M", false)
+		if err != nil {
+			return nil, errors.New("CRUD - Create database and user error.")
+		}
+		DashboardURL = generateOracleUri(userName, userPassword, connectURI, databaseName)
+
+		cred["gen_database"] = databaseName
+		cred["gen_username"] = userName
+		cred["gen_password"] = userPassword
+
 		o.instanceMap[id] = &userProvidedServiceInstance{
 			Name:       id,
 			Credential: &cred,
@@ -81,6 +94,8 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 
 	return &brokerapi.CreateServiceInstanceResponse{
 		Operation: "Provision",
+		//TODO: DashboardURL
+		DashboardURL: DashboardURL,
 	}, nil
 }
 
@@ -89,11 +104,32 @@ func (o *OracleServiceBroker) DeProvision(id string) (*brokerapi.DeleteServiceIn
 	defer o.rwMutex.Unlock()
 
 	//TODO: Need to be replace by etcd v3.
-	_, ok := o.instanceMap[id]
+	instance, ok := o.instanceMap[id]
 
 	if ok {
+		cred := instance.Credential
+		connectURI := cred["connect_uri"]
+		if connectURI == "" {
+			return nil, errors.New("Parameters cann't to be obtain \\'connect_uri\\'")
+		}
+		databaseName := cred["gen_database"]
+		if databaseName == "" {
+			return nil, errors.New("Parameters cann't to be obtain \\'gen_database\\'")
+		}
+		userName := cred["gen_username"]
+		if userName == "" {
+			return nil, errors.New("Parameters cann't to be obtain \\'gen_username\\'")
+		}
+
+		err := deleteDatabaseAndUser(connectURI, databaseName, userName)
+		if err != nil {
+			return nil, errors.New("CRUD - Delete database and user error.")
+		}
 		delete(o.instanceMap, id)
-		return &brokerapi.DeleteServiceInstanceResponse{}, nil
+
+		return &brokerapi.DeleteServiceInstanceResponse{
+			Operation: "DeProvision",
+		}, nil
 	}
 
 	return &brokerapi.DeleteServiceInstanceResponse{
