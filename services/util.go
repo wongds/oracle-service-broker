@@ -58,10 +58,6 @@ func generateOracleUri(username, password, address, sid string) string {
 	return fmt.Sprintf("%s:%s@%s/%s", username, password, address, sid)
 }
 
-func generateOracleUriWithSid(username, password, addressWithSid string) string {
-	return fmt.Sprintf("%s:%s@%s", username, password, addressWithSid)
-}
-
 func generateGuid() string {
 	b := make([]byte, 48)
 
