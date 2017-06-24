@@ -48,7 +48,7 @@ func getEqualPlan(serviceName, planName string) *brokerapi.ServicePlan {
 	service := getEqualService(serviceName)
 	for _, plan := range service.Plans {
 		if planName == plan.Name {
-			return *plan
+			return &plan
 		}
 	}
 	return nil
