@@ -67,7 +67,7 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 		cred := &brokerapi.Credential{}
 		err = json.Unmarshal(jsonCred, cred)
 
-		connectURI := cred["connect_uri"]
+		connectURI := *cred["connect_uri"]
 		if connectURI == "" {
 			return nil, errors.New("Parameters need to be provided \\'connect_uri\\'")
 		}
@@ -79,9 +79,9 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 		}
 		DashboardURL = generateOracleUri(userName, userPassword, connectURI, databaseName)
 
-		cred["gen_database"] = databaseName
-		cred["gen_username"] = userName
-		cred["gen_password"] = userPassword
+		*cred["gen_database"] = databaseName
+		*cred["gen_username"] = userName
+		*cred["gen_password"] = userPassword
 
 		o.instanceMap[id] = &userProvidedServiceInstance{
 			Name:       id,
@@ -107,15 +107,15 @@ func (o *OracleServiceBroker) DeProvision(id string) (*brokerapi.DeleteServiceIn
 
 	if ok {
 		cred := instance.Credential
-		connectURI := cred["connect_uri"]
+		connectURI := *cred["connect_uri"]
 		if connectURI == "" {
 			return nil, errors.New("Parameters cann't to be obtain \\'connect_uri\\'")
 		}
-		databaseName := cred["gen_database"]
+		databaseName := *cred["gen_database"]
 		if databaseName == "" {
 			return nil, errors.New("Parameters cann't to be obtain \\'gen_database\\'")
 		}
-		userName := cred["gen_username"]
+		userName := *cred["gen_username"]
 		if userName == "" {
 			return nil, errors.New("Parameters cann't to be obtain \\'gen_username\\'")
 		}
