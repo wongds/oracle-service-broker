@@ -6,7 +6,6 @@ import (
 	"oracle-service-broker/services"
 
 	"github.com/astaxie/beego"
-	"log"
 )
 
 // Operations about Catalogs
