@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"net/http"
+	
 	"oracle-service-broker/services"
 
 	"github.com/astaxie/beego"
@@ -20,7 +22,5 @@ type CatalogsController struct {
 func (c *CatalogsController) Catalogs() {
 	catalog := services.OracleServiceBrokerInstance().Catalog()
 
-	c.Data["json"] = catalog
-
-	c.ServeJSON()
+	writeResponse(c, http.StatusOK, catalog)
 }
