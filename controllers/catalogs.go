@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"net/http"
-	
+
 	"oracle-service-broker/services"
 
 	"github.com/astaxie/beego"
@@ -22,5 +22,14 @@ type CatalogsController struct {
 func (c *CatalogsController) Catalogs() {
 	catalog := services.OracleServiceBrokerInstance().Catalog()
 
-	writeResponse(c, http.StatusOK, catalog)
+	writeCatalogResponse(c, http.StatusOK, catalog)
+}
+
+// WriteResponse will serialize 'object' to the HTTP ResponseWriter
+// using the 'code' as the HTTP status code
+func writeCatalogResponse(c *CatalogsController, code int, object interface{}) {
+	c.Ctx.ResponseWriter.WriteHeader(code)
+	c.Ctx.Output.Header("Content-Type", "application/json")
+	c.Data["json"] = object
+	c.ServeJSON()
 }
