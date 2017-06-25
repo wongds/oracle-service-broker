@@ -6,6 +6,7 @@ import (
 	"oracle-service-broker/services"
 
 	"github.com/astaxie/beego"
+	"log"
 )
 
 // Operations about Catalogs
@@ -20,8 +21,9 @@ type CatalogsController struct {
 // @Failure 500 {object} error
 // @router / [get]
 func (c *CatalogsController) Catalogs() {
+	log.Println("111111111111")
 	catalog := services.OracleServiceBrokerInstance().Catalog()
-
+	log.Println("222222222222")
 	writeCatalogResponse(c, http.StatusOK, catalog)
 }
 

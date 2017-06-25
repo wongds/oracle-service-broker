@@ -14,25 +14,32 @@ import (
 	"github.com/ghodss/yaml"
 	"github.com/golang/glog"
 	"github.com/kubernetes-incubator/service-catalog/pkg/brokerapi"
+	"log"
 )
 
 func readBrokerSettings() *brokerapi.Catalog {
+	log.Println("333333333333333")
 	flag.Parse()
+	log.Println("444444444444444")
 	section, _ := beego.AppConfig.GetSection("oracle-service-broker")
-
+	log.Println("555555555555555")
 	bytes, err := ioutil.ReadFile(section["settings.path"])
-
+	log.Println("666666666666666")
 	if err != nil {
+		log.Println("888888888888888888")
 		glog.Fatalln("load settings.yaml error...", err.Error())
 	}
-
+	log.Println("777777777777777")
 	broker := &brokerapi.Catalog{}
-
+	log.Println("99999999999999999")
 	err = yaml.Unmarshal(bytes, broker)
+	log.Println("ffffffffffffffff")
 	if err != nil {
+		log.Println("aaaaaaaaaaaaaaaaaaaaaaaa")
 		glog.Fatalln("yaml unmarshal err...", err.Error())
+		log.Println("bbbbbbbbbbbbbbbbbbbbbbb")
 	}
-
+	log.Println("ccccccccccccccccccccc")
 	return broker
 }
 
