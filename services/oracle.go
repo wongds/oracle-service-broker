@@ -61,14 +61,10 @@ func createDatabaseAndUser(conn string, tableSpace string, bigFile bool) (string
 	println(sqlAlterTS)
 
 	_, err = db.Query(sqlAlterTS)
-	log.Println(1111)
 	if err != nil {
-		log.Println(2222)
 		println("alert tablespace err:", err.Error())
 		return "", "", "", err
 	}
-
-	log.Println(3333)
 
 	newUsername := "u" + generateGuid()[0:15]
 	newPassword := "p" + generateGuid()[0:15]
@@ -78,9 +74,7 @@ func createDatabaseAndUser(conn string, tableSpace string, bigFile bool) (string
 	println(sqlCreateUser)
 
 	_, err = db.Query(sqlCreateUser)
-	log.Println(4444)
 	if err != nil {
-		log.Println(55555)
 		println("create user err:", err.Error())
 		return "", "", "", err
 	}
