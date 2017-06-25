@@ -33,13 +33,17 @@ func createDatabaseAndUser(conn string, tableSpace string, bigFile bool) (string
 	} else {
 		sqlCreateTS = fmt.Sprintf("create tablespace %s", databaseName)
 	}
+
 	println(sqlCreateTS)
 
 	_, err = db.Query(sqlCreateTS)
+	log.Println(1111)
 	if err != nil {
+		log.Println(2222)
 		log.Println(err)
 		return "", "", "", err
 	}
+	log.Println(333)
 
 	defer func() {
 		if bindSucceeded {

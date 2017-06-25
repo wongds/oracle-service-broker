@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"flag"
 	"net/http"
 
 	"oracle-service-broker/services"
@@ -43,6 +44,7 @@ func (i *InstancesController) Instance() {
 // @Failure 500 {object} error
 // @router /:instance_id [put]
 func (i *InstancesController) Provision() {
+	flag.Parse()
 	instanceId := i.GetString(":instance_id")
 
 	glog.Infof("Provision service instance %s...\n", instanceId)
