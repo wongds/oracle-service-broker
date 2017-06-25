@@ -37,13 +37,10 @@ func createDatabaseAndUser(conn string, tableSpace string, bigFile bool) (string
 	println(sqlCreateTS)
 
 	_, err = db.Query(sqlCreateTS)
-	log.Println(1111)
 	if err != nil {
-		log.Println(2222)
 		log.Println(err)
 		return "", "", "", err
 	}
-	log.Println(333)
 
 	defer func() {
 		if bindSucceeded {
@@ -60,19 +57,30 @@ func createDatabaseAndUser(conn string, tableSpace string, bigFile bool) (string
 	}()
 
 	sqlAlterTS := fmt.Sprintf("alter tablespace %s resize %s", databaseName, tableSpace)
-	println("alter tablespace: ", sqlAlterTS)
+
+	println(sqlAlterTS)
+
 	_, err = db.Query(sqlAlterTS)
+	log.Println(1111)
 	if err != nil {
+		log.Println(2222)
+		log.Println(err)
 		return "", "", "", err
 	}
+
+	log.Println(3333)
 
 	newUsername := "u" + generateGuid()[0:15]
 	newPassword := "p" + generateGuid()[0:15]
 
 	sqlCreateUser := fmt.Sprintf(`CREATE USER %s IDENTIFIED BY %s`, newUsername, newPassword)
-	println("create user: ", sqlCreateUser)
+
+	println(sqlCreateUser)
+
 	_, err = db.Query(sqlCreateUser)
+	log.Println(4444)
 	if err != nil {
+		log.Println(55555)
 		println("create user err:", err.Error())
 		return "", "", "", err
 	}
