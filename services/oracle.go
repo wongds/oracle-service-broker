@@ -6,6 +6,7 @@ import (
 	"database/sql"
 
 	_ "github.com/mattn/go-oci8"
+	"log"
 )
 
 // create oracle database and database user.
@@ -32,10 +33,11 @@ func createDatabaseAndUser(conn string, tableSpace string, bigFile bool) (string
 	} else {
 		sqlCreateTS = fmt.Sprintf("create tablespace %s", databaseName)
 	}
-	println("create tablespace: ", sqlCreateTS)
+	println(sqlCreateTS)
 
 	_, err = db.Query(sqlCreateTS)
 	if err != nil {
+		log.Println(err)
 		return "", "", "", err
 	}
 
