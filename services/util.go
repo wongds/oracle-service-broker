@@ -52,7 +52,7 @@ func getEqualPlan(serviceName, planName string) *brokerapi.ServicePlan {
 }
 
 func generateOracleUri(username, password, address, sid string) string {
-	return fmt.Sprintf("%s:%s@%s/%s", username, password, address, sid)
+	return fmt.Sprintf("%s/%s@%s/%s", username, password, address, sid)
 }
 
 func generateGuid() string {
