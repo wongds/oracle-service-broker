@@ -26,7 +26,7 @@ services:
          min: 0.0
          max: 20.0
        unit: minTableSpace
-    - amount:
+     - amount:
          min: 0.0
          max: 20.0
        unit: maxTableSpace

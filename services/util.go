@@ -7,6 +7,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io"
+	"flag"
 	"io/ioutil"
 
 	"github.com/astaxie/beego"
@@ -16,6 +17,7 @@ import (
 )
 
 func readBrokerSettings() *brokerapi.Catalog {
+	flag.Parse()
 	section, _ := beego.AppConfig.GetSection("oracle-service-broker")
 
 	bytes, err := ioutil.ReadFile(section["settings.path"])
