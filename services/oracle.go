@@ -38,7 +38,7 @@ func createDatabaseAndUser(conn string, tableSpace string, bigFile bool) (string
 
 	_, err = db.Query(sqlCreateTS)
 	if err != nil {
-		log.Println(err)
+		println("create tablespace err:", err.Error())
 		return "", "", "", err
 	}
 
@@ -64,7 +64,7 @@ func createDatabaseAndUser(conn string, tableSpace string, bigFile bool) (string
 	log.Println(1111)
 	if err != nil {
 		log.Println(2222)
-		log.Println(err)
+		println("alert tablespace err:", err.Error())
 		return "", "", "", err
 	}
 

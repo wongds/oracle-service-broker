@@ -74,7 +74,7 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 		}
 
 		//TODO: Need read from settings.yaml
-		databaseName, userName, userPassword, err := createDatabaseAndUser(connectURI.(string), "20M", false)
+		databaseName, userName, userPassword, err := createDatabaseAndUser(connectURI.(string), "256M", true)
 		if err != nil {
 			return nil, errors.New("CRUD - Create database and user error.")
 		}
