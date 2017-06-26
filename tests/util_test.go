@@ -1,23 +1,30 @@
-package services
+package test
 
 import (
-	"crypto/md5"
-	"crypto/rand"
-	"encoding/base64"
-	"encoding/hex"
-	"fmt"
-	"io"
+	"flag"
+	"testing"
 	"io/ioutil"
 
-	"github.com/astaxie/beego"
 	"github.com/ghodss/yaml"
 	"github.com/golang/glog"
 	"github.com/kubernetes-incubator/service-catalog/pkg/brokerapi"
 )
 
+func TestGetEqualPlan(t *testing.T) {
+
+	plan := getEqualPlan("oracle-service", "default")
+	if plan == nil {
+		t.Errorf("Plan %s not found.Please select corrected plan.", "default")
+	}
+
+	t.Log(plan.Metadata)
+
+}
+
 func readBrokerSettings() *brokerapi.Catalog {
-	section, _ := beego.AppConfig.GetSection("oracle-service-broker")
-	bytes, err := ioutil.ReadFile(section["settings.path"])
+	flag.Parse()
+
+	bytes, err := ioutil.ReadFile("../conf/settings.yaml")
 	if err != nil {
 		glog.Fatalln("load settings.yaml error...", err.Error())
 	}
@@ -47,23 +54,4 @@ func getEqualPlan(serviceName, planName string) *brokerapi.ServicePlan {
 		}
 	}
 	return nil
-}
-
-func generateOracleUri(username, password, address, sid string) string {
-	return fmt.Sprintf("%s/%s@%s/%s", username, password, address, sid)
-}
-
-func generateGuid() string {
-	b := make([]byte, 48)
-
-	if _, err := io.ReadFull(rand.Reader, b); err != nil {
-		return ""
-	}
-	return generateMd5(base64.URLEncoding.EncodeToString(b))
-}
-
-func generateMd5(s string) string {
-	h := md5.New()
-	h.Write([]byte(s))
-	return hex.EncodeToString(h.Sum(nil))
 }

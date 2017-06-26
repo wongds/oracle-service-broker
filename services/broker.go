@@ -73,6 +73,11 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 		}
 
 		//TODO: Need read from settings.yaml
+		plan := getEqualPlan(req.ServiceID, req.PlanID)
+		if plan == nil {
+			return nil, errors.New("Plan not found.Please select corrected plan.")
+		}
+
 		databaseName, userName, userPassword, err := createDatabaseAndUser(connectURI.(string), "256M", true)
 		if err != nil {
 			return nil, errors.New("CRUD - Create database and user error.")

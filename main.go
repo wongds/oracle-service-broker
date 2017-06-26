@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+
 	_ "github.com/compassorg/oracle-service-broker/routers"
 
 	"github.com/astaxie/beego"
@@ -8,6 +10,7 @@ import (
 )
 
 func main() {
+	flag.Parse()
 	if beego.BConfig.RunMode == "dev" {
 		beego.BConfig.WebConfig.DirectoryIndex = true
 		beego.BConfig.WebConfig.StaticDir["/docs"] = "swagger"
