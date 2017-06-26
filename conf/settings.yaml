@@ -28,7 +28,73 @@ services:
        unit: minTableSpace
      - amount:
          min: 0.0
+         max: 25.0
+       unit: maxTableSpace
+     bullets:
+       - Shared Oracle server
+       - free storage
+  - name: plan01
+    id: 2651da21-dc16-4c1a-ba6c-1c681a3dcdc2
+    description: Shared Oracle Server
+    free: true
+    bindable: true
+    metadata:
+     costs:
+     - amount:
+         min: 0.0
          max: 20.0
+       unit: minTableSpace
+     - amount:
+         min: 0.0
+         max: 25.0
+       unit: maxTableSpace
+     bullets:
+       - Shared Oracle server
+       - free storage
+- name: oracle-service-bak
+  id: 3102c871-1044-4716-a7dc-9ded2e028279
+  description: Oracle service for application development and testing
+  bindable: true
+  tags:
+    - oracle
+    - relational
+  metadata:
+    providerDisplayName: experimental
+    imageUrl: http://orvjyath1.bkt.clouddn.com/oracle.jpg
+    longDescription: Oracle service for application development and testing
+  plans:
+  - name: default
+    id: 2651da21-dc16-4c1a-ba6c-1c681a3dcdc1
+    description: Shared Oracle Server
+    free: true
+    bindable: true
+    metadata:
+     costs:
+     - amount:
+         min: 0.0
+         max: 20.0
+       unit: minTableSpace
+     - amount:
+         min: 0.0
+         max: 25.0
+       unit: maxTableSpace
+     bullets:
+       - Shared Oracle server
+       - free storage
+  - name: plan01
+    id: 2651da21-dc16-4c1a-ba6c-1c681a3dcdc2
+    description: Shared Oracle Server
+    free: true
+    bindable: true
+    metadata:
+     costs:
+     - amount:
+         min: 0.0
+         max: 20.0
+       unit: minTableSpace
+     - amount:
+         min: 0.0
+         max: 25.0
        unit: maxTableSpace
      bullets:
        - Shared Oracle server
