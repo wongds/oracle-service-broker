@@ -8,7 +8,7 @@
 package routers
 
 import (
-	"oracle-service-broker/controllers"
+	"github.com/compassorg/oracle-service-broker/controllers"
 
 	"github.com/astaxie/beego"
 )
