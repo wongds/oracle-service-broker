@@ -1,5 +1,8 @@
 # Default values for User-Provided Service Broker
 # Image to use
-image: neunnsy/oracle-service-broker:v0.0.1
+image: neunnsy/oracle-service-broker:v0.0.2
 # ImagePullPolicy; valid values are "IfNotPresent", "Never", and "Always"
 imagePullPolicy: IfNotPresent
+
+# Etcd Image to use
+etcd-image: quay.io/coreos/etcd:v3.0.17
