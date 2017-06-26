@@ -2,11 +2,11 @@ package services
 
 import (
 	"fmt"
+	"log"
 	"strings"
 	"database/sql"
 
 	_ "github.com/mattn/go-oci8"
-	"log"
 )
 
 // create oracle database and database user.

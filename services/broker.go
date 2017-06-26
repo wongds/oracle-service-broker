@@ -67,7 +67,6 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 		cred := &brokerapi.Credential{}
 		err = json.Unmarshal(jsonCred, cred)
 
-
 		connectURI := (*cred)["connect_uri"]
 		if connectURI == "" {
 			return nil, errors.New("Parameters need to be provided \\'connect_uri\\'")
@@ -94,7 +93,7 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 	glog.Info("instance map :", o.instanceMap)
 
 	return &brokerapi.CreateServiceInstanceResponse{
-		Operation: "Provision",
+		Operation:    "Provision",
 		DashboardURL: DashboardURL,
 	}, nil
 }
