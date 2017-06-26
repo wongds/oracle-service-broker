@@ -4,6 +4,7 @@ swagger/swagger.yml
 
 # idea
 .idea
+.idea/vcs.xml
 *.iml
 *.exe
 *.exe~
