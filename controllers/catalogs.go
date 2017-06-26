@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"oracle-service-broker/services"
+	"github.com/compassorg/oracle-service-broker/services"
 
 	"github.com/astaxie/beego"
 )

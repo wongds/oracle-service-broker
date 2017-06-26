@@ -4,7 +4,7 @@ import (
 	"flag"
 	"net/http"
 
-	"oracle-service-broker/services"
+	"github.com/compassorg/oracle-service-broker/services"
 
 	"github.com/golang/glog"
 	"github.com/astaxie/beego"
