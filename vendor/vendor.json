@@ -207,6 +207,42 @@
 			"revisionTime": "2017-04-24T14:00:49Z"
 		},
 		{
+			"checksumSHA1": "1+T3s64i3hz9NXbXz4Mszg2Yl6I=",
+			"path": "github.com/coreos/etcd/client",
+			"revision": "703663d1f6ed070ab83b01386f0b023091c5e016",
+			"revisionTime": "2017-06-26T01:50:32Z"
+		},
+		{
+			"checksumSHA1": "mKIXx1kDwmVmdIpZ3pJtRBuUKso=",
+			"path": "github.com/coreos/etcd/pkg/pathutil",
+			"revision": "703663d1f6ed070ab83b01386f0b023091c5e016",
+			"revisionTime": "2017-06-26T01:50:32Z"
+		},
+		{
+			"checksumSHA1": "in4X4M2FFl6+eAXgxdxxSOZi1Vw=",
+			"path": "github.com/coreos/etcd/pkg/srv",
+			"revision": "703663d1f6ed070ab83b01386f0b023091c5e016",
+			"revisionTime": "2017-06-26T01:50:32Z"
+		},
+		{
+			"checksumSHA1": "gx1gJIMU6T0UNQ0bPZ/drQ8cpCI=",
+			"path": "github.com/coreos/etcd/pkg/types",
+			"revision": "703663d1f6ed070ab83b01386f0b023091c5e016",
+			"revisionTime": "2017-06-26T01:50:32Z"
+		},
+		{
+			"checksumSHA1": "MgYezsE5iTHxzTT5dnacBeuJBHY=",
+			"path": "github.com/coreos/etcd/version",
+			"revision": "703663d1f6ed070ab83b01386f0b023091c5e016",
+			"revisionTime": "2017-06-26T01:50:32Z"
+		},
+		{
+			"checksumSHA1": "97BsbXOiZ8+Kr+LIuZkQFtSj7H4=",
+			"path": "github.com/coreos/go-semver/semver",
+			"revision": "1817cd4bea52af76542157eeabd74b057d1a199e",
+			"revisionTime": "2017-06-13T09:22:38Z"
+		},
+		{
 			"checksumSHA1": "YDcw8B6etdsVbfS2bYOSx4gp0dM=",
 			"path": "github.com/derekparker/delve/config",
 			"revision": "449b276fe1ce7e20a0c7ffffbdd47d97f40022a1",
@@ -400,6 +436,12 @@
 			"revisionTime": "2016-08-23T18:01:44Z"
 		},
 		{
+			"checksumSHA1": "9Zw986fuQM/hCoVd8vmHoSM+8sU=",
+			"path": "github.com/ugorji/go/codec",
+			"revision": "5efa3251c7f7d05e5d9704a69a984ec9f1386a40",
+			"revisionTime": "2017-06-20T10:48:52Z"
+		},
+		{
 			"checksumSHA1": "8zT7g89vxUOnihh17WQlggLjUwQ=",
 			"origin": "github.com/derekparker/delve/vendor/golang.org/x/debug/dwarf",
 			"path": "golang.org/x/debug/dwarf",
@@ -450,5 +492,5 @@
 			"revisionTime": "2017-03-13T17:59:34Z"
 		}
 	],
-	"rootPath": "oracle-service-broker"
+	"rootPath": "github.com/compassorg/oracle-service-broker"
 }

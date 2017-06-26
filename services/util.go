@@ -8,11 +8,16 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"time"
 
+	"golang.org/x/net/context"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 	"github.com/ghodss/yaml"
 	"github.com/golang/glog"
+	"github.com/coreos/etcd/client"
 	"github.com/kubernetes-incubator/service-catalog/pkg/brokerapi"
+	"strings"
 )
 
 func readBrokerSettings() *brokerapi.Catalog {
@@ -66,4 +71,79 @@ func generateMd5(s string) string {
 	h := md5.New()
 	h.Write([]byte(s))
 	return hex.EncodeToString(h.Sum(nil))
+}
+
+// For etcd client util.
+var etcdClient *EtcdClient = nil
+
+func GetEtcdClientInstance() (*EtcdClient) {
+	if etcdClient == nil {
+		section, _ := beego.AppConfig.GetSection("etcd")
+		endpointString := section["endpoints"]
+		endpoints := strings.Split(endpointString, ",")
+		config := client.Config{
+			Endpoints: endpoints,
+			Transport: client.DefaultTransport,
+			HeaderTimeoutPerRequest: time.Second * 5,
+		}
+		c, err := client.New(config)
+		if err != nil {
+			logs.Error("Can not init etcd client.", err)
+			return etcdClient
+		}
+		etcdClient = &EtcdClient{
+			EtcdApi: client.NewKeysAPI(c),
+		}
+	}
+	return etcdClient
+}
+
+type EtcdClient struct {
+	EtcdApi client.KeysAPI
+}
+
+
+func (e *EtcdClient) Get(key string) (*client.Response, error) {
+	n := 5
+
+	RETRY:
+	resp, err := e.EtcdApi.Get(context.Background(), key, nil)
+	if err != nil {
+		logs.Error("Can not get "+ key +" from etcd", err)
+		n --
+		if n > 0 {
+			goto RETRY
+		}
+
+		return nil, err
+	} else {
+		logs.Debug("Successful get " + key + " from etcd. value is " + resp.Node.Value)
+		return resp, nil
+	}
+}
+
+func (e *EtcdClient) Set(key string, value string) (*client.Response, error) {
+	n := 5
+
+	RETRY:
+	resp, err := e.EtcdApi.Set(context.Background(), key, value, nil)
+	if err != nil {
+		logs.Error("Can not set "+ key +" from etcd", err)
+		n --
+		if n > 0 {
+			goto RETRY
+		}
+
+		return nil, err
+	} else {
+		logs.Debug("Successful set " + key + " from etcd. value is " + value)
+		return resp, nil
+	}
+}
+
+func (e *EtcdClient) Delete(key string) (*client.Response, error) {
+	return e.EtcdApi.Delete(context.Background(), key, &client.DeleteOptions{
+		Recursive: true,
+		Dir: true,
+	})
 }
