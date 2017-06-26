@@ -3,6 +3,8 @@ swagger/swagger.json
 swagger/swagger.yml
 
 # idea
+.idea
+.idea/vcs.xml
 *.iml
 *.exe
 *.exe~
