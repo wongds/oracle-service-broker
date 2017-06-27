@@ -3,11 +3,10 @@ package services
 import (
 	"encoding/json"
 	"errors"
-	//"sync"
 
 	"github.com/golang/glog"
 	"github.com/kubernetes-incubator/service-catalog/pkg/brokerapi"
-	//"github.com/kubernetes-incubator/service-catalog/pkg/registry/servicecatalog/instance"
+
 	"github.com/astaxie/beego/logs"
 )
 
@@ -16,17 +15,11 @@ var (
 )
 
 type OracleServiceBroker struct {
-	//rwMutex sync.RWMutex
-	//TODO: Need to be replace by etcd v3.
-	//instanceMap map[string]*userProvidedServiceInstance
 }
 
 func OracleServiceBrokerInstance() *OracleServiceBroker {
 	if oracleServiceBroker == nil {
-		//TODO: Need to be replace by etcd v3.
-		//var instanceMap = make(map[string]*userProvidedServiceInstance)
 		oracleServiceBroker = &OracleServiceBroker{
-		//instanceMap: instanceMap,
 		}
 	}
 	return oracleServiceBroker
@@ -39,10 +32,6 @@ func (o *OracleServiceBroker) Catalog() *brokerapi.Catalog {
 func (o *OracleServiceBroker) ServiceInstance(id string) (string, error) {
 	result := ""
 
-	//TODO: Need to be replace by etcd v3.
-	//if _, ok := o.instanceMap[id]; ok {
-	//	result = id
-	//}
 	client := GetEtcdClientInstance()
 	if client == nil {
 		return "", errors.New("Create etcd client instance failure.")
@@ -60,15 +49,11 @@ func (o *OracleServiceBroker) ServiceInstance(id string) (string, error) {
 	if ok {
 		result = id
 	}
-	//glog.Info("instance map len :", len(o.instanceMap))
-	//glog.Info("instance map :", o.instanceMap)
 
 	return result, nil
 }
 
 func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceInstanceRequest) (*brokerapi.CreateServiceInstanceResponse, error) {
-	//o.rwMutex.Lock()
-	//defer o.rwMutex.Unlock()
 
 	DashboardURL := ""
 
@@ -86,14 +71,23 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 		err = json.Unmarshal(jsonCred, cred)
 
 		connectURI := (*cred)["connect_uri"]
+		serviceName := (*cred)["service_name"]
+		planName := (*cred)["plan_name"]
 		if connectURI == "" {
 			return nil, errors.New("Parameters need to be provided \\'connect_uri\\'")
 		}
+		if serviceName == "" {
+			return nil, errors.New("Parameters need to be provided \\'service_name\\'")
+		}
+		if planName == "" {
+			return nil, errors.New("Parameters need to be provided \\'plan_name\\'")
+		}
 		logs.Info("Parameters \"connect_uri\" : ", connectURI)
-		logs.Info("Parameters \"serviceId\" : ", req.ServiceID)
-		logs.Info("Parameters \"planID\" : ", req.PlanID)
+		logs.Info("Parameters \"service_name\" : ", serviceName)
+		logs.Info("Parameters \"plan_name\" : ", planName)
 
-		plan := getEqualPlan(req.ServiceID, req.PlanID)
+
+		plan := getEqualPlan(serviceName, serviceName)
 		if plan == nil {
 			return nil, errors.New("Plan not found.Please select corrected plan.")
 		}
