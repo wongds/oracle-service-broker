@@ -75,7 +75,7 @@ func getPlanValue(plan *brokerapi.ServicePlan) string {
 	valueUnit := ""
 	if len(metadata.Costs) > 0 {
 		cost := metadata.Costs[0]
-		valueUnit, _ = fmt.Printf("%s%s", cost.Amount.Value, cost.Unit)
+		valueUnit, _ = fmt.Printf("%s%s", string(cost.Amount.Value), cost.Unit)
 	}
 
 	return valueUnit
