@@ -8,16 +8,19 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"strings"
 	"time"
 
-	"golang.org/x/net/context"
+	"github.com/compassorg/oracle-service-broker/models"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
+	"github.com/coreos/etcd/client"
 	"github.com/ghodss/yaml"
 	"github.com/golang/glog"
-	"github.com/coreos/etcd/client"
 	"github.com/kubernetes-incubator/service-catalog/pkg/brokerapi"
-	"strings"
+	"golang.org/x/net/context"
+	yamlV2 "gopkg.in/yaml.v2"
 )
 
 func readBrokerSettings() *brokerapi.Catalog {
@@ -54,6 +57,30 @@ func getEqualPlan(serviceName, planName string) *brokerapi.ServicePlan {
 	return nil
 }
 
+func getPlanValue(plan *brokerapi.ServicePlan) string {
+	bytes, err := yamlV2.Marshal(plan.Metadata)
+	if err != nil {
+		glog.Errorf("Yaml Unmarshal error. %s", err.Error())
+		return ""
+	}
+
+	metadata := models.Metadata{}
+	err = yamlV2.Unmarshal(bytes, &metadata)
+	if err != nil {
+		glog.Errorf("Yaml Marshal error. %s", err.Error())
+		return ""
+	}
+
+	// ignore all values but first value
+	valueUnit := ""
+	if len(metadata.Costs) > 0 {
+		cost := metadata.Costs[0]
+		valueUnit, _ = fmt.Printf("%s%s", cost.Amount.Value, cost.Unit)
+	}
+
+	return valueUnit
+}
+
 func generateOracleUri(username, password, address, sid string) string {
 	return fmt.Sprintf("%s/%s@%s/%s", username, password, address, sid)
 }
@@ -76,14 +103,14 @@ func generateMd5(s string) string {
 // For etcd client util.
 var etcdClient *EtcdClient = nil
 
-func GetEtcdClientInstance() (*EtcdClient) {
+func GetEtcdClientInstance() *EtcdClient {
 	if etcdClient == nil {
 		section, _ := beego.AppConfig.GetSection("etcd")
 		endpointString := section["endpoints"]
 		endpoints := strings.Split(endpointString, ",")
 		config := client.Config{
-			Endpoints: endpoints,
-			Transport: client.DefaultTransport,
+			Endpoints:               endpoints,
+			Transport:               client.DefaultTransport,
 			HeaderTimeoutPerRequest: time.Second * 5,
 		}
 		c, err := client.New(config)
@@ -102,15 +129,14 @@ type EtcdClient struct {
 	EtcdApi client.KeysAPI
 }
 
-
 func (e *EtcdClient) Get(key string) (*client.Response, error) {
 	n := 5
 
-	RETRY:
+RETRY:
 	resp, err := e.EtcdApi.Get(context.Background(), key, nil)
 	if err != nil {
-		logs.Error("Can not get "+ key +" from etcd", err)
-		n --
+		logs.Error("Can not get "+key+" from etcd", err)
+		n--
 		if n > 0 {
 			goto RETRY
 		}
@@ -125,11 +151,11 @@ func (e *EtcdClient) Get(key string) (*client.Response, error) {
 func (e *EtcdClient) Set(key string, value string) (*client.Response, error) {
 	n := 5
 
-	RETRY:
+RETRY:
 	resp, err := e.EtcdApi.Set(context.Background(), key, value, nil)
 	if err != nil {
-		logs.Error("Can not set "+ key +" from etcd", err)
-		n --
+		logs.Error("Can not set "+key+" from etcd", err)
+		n--
 		if n > 0 {
 			goto RETRY
 		}
@@ -144,6 +170,6 @@ func (e *EtcdClient) Set(key string, value string) (*client.Response, error) {
 func (e *EtcdClient) Delete(key string) (*client.Response, error) {
 	return e.EtcdApi.Delete(context.Background(), key, &client.DeleteOptions{
 		Recursive: true,
-		Dir: true,
+		Dir:       true,
 	})
 }

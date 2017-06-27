@@ -26,7 +26,7 @@ func OracleServiceBrokerInstance() *OracleServiceBroker {
 		//TODO: Need to be replace by etcd v3.
 		//var instanceMap = make(map[string]*userProvidedServiceInstance)
 		oracleServiceBroker = &OracleServiceBroker{
-			//instanceMap: instanceMap,
+		//instanceMap: instanceMap,
 		}
 	}
 	return oracleServiceBroker
@@ -89,14 +89,19 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 		if connectURI == "" {
 			return nil, errors.New("Parameters need to be provided \\'connect_uri\\'")
 		}
-		logs.Info("connect_uri===", connectURI)
-		//TODO: Need read from settings.yaml
+		logs.Info("Parameters \"connect_uri\" : ", connectURI)
+
 		plan := getEqualPlan(req.ServiceID, req.PlanID)
 		if plan == nil {
 			return nil, errors.New("Plan not found.Please select corrected plan.")
 		}
+		valueUnit := getPlanValue(plan)
+		if valueUnit == "" {
+			logs.Info("Get plan value equals \"\".")
+			return nil, errors.New("Get plan value equals \"\".")
+		}
 
-		databaseName, userName, userPassword, err := createDatabaseAndUser(connectURI.(string), "256M", true)
+		databaseName, userName, userPassword, err := createDatabaseAndUser(connectURI.(string), valueUnit, true)
 		if err != nil {
 			logs.Info(err)
 			return nil, errors.New("CRUD - Create database and user error.")
@@ -126,7 +131,7 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 			return nil, errors.New("Create etcd client instance failure.")
 		}
 		logs.Info(string(contents))
-		client.Set("/serviceinstance/" + id, string(contents))
+		client.Set("/serviceinstance/"+id, string(contents))
 	}
 
 	//glog.Info("instance map len :", len(o.instanceMap))
