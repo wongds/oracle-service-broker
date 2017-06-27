@@ -5,4 +5,4 @@ image: neunnsy/oracle-service-broker:v0.0.2
 imagePullPolicy: IfNotPresent
 
 # Etcd Image to use
-etcd-image: quay.io/coreos/etcd:v3.0.17
+etcdImage: quay.io/coreos/etcd:v3.0.17

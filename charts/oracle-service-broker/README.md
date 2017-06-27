@@ -1,49 +1,38 @@
 # Oracle Service Broker
 
-Oracle Service Broker is an example
+用于对接外部Oracle集群服务,遵守ServiceBroker API规范.
 [Open Service Broker](https://www.openservicebrokerapi.org/)
-for use demonstrating the Kubernetes
-Service Catalog.
 
-For more information,
-[visit the Service Catalog project on github](https://github.com/kubernetes-incubator/service-catalog).
 
-## Installing the Chart
+更多信息,
+[请访问 GitHub 上 Service Catalog 项目](https://github.com/kubernetes-incubator/service-catalog).
 
-To install the chart with the release name `oracle-service-broker`:
+## 安装应用
+安装用户需要上传已经准备好`json`文件,内容如下:
 
-```bash
-$ helm install charts/oracle-service-broker --name oracle-service-broker --namespace oracle-service-broker
+```
+{
+	"name": "oracle-service-broker",
+	"namespace": "default",
+	"repo": "dcos",
+	"chart": "oracle-service-broker",
+	"version": "0.0.2",
+	"values": {
+		"image": "neunnsy/oracle-service-broker:v0.0.2",
+		"imagePullPolicy": "IfNotPresent",
+		"etcdImage": "quay.io/coreos/etcd:v3.0.17"
+	}
+}
+
 ```
 
-## Uninstalling the Chart
+## 配置参数
 
-To uninstall/delete the `oracle-service-broker` deployment:
+下面表格中的内容列举了用户提供的 ServiceBroker 可配置参数
 
-```bash
-$ helm delete oracle-service-broker
-```
-
-The command removes all the Kubernetes components associated with the chart and
-deletes the release.
-
-## Configuration
-
-The following tables lists the configurable parameters of the User Provided
-Service Broker
-
-| Parameter | Description | Default |
+| 参数列表 | 描述 | 默认值 |
 |-----------|-------------|---------|
-| `image` | Image to use | `neunnsy/oracle-service-broker:v0.0.2` |
-| `imagePullPolicy` | `imagePullPolicy` for the ups-broker | `Always` |
+| `image` | 镜像 | `neunnsy/oracle-service-broker:v0.0.2` |
+| `imagePullPolicy` | 镜像拉取规则 | `Always` |
+|`etcdImage`|etcd镜像|`quay.io/coreos/etcd:v3.0.17`|
 
-Specify each parameter using the `--set key=value[,key=value]` argument to
-`helm install`.
-
-Alternatively, a YAML file that specifies the values for the parameters can be
-provided while installing the chart. For example:
-
-```bash
-$ helm install charts/oracle-service-broker --name oracle-service-broker --namespace oracle-service-broker \
-  --values values.yaml
-```

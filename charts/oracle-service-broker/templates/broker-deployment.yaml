@@ -43,5 +43,5 @@ spec:
           successThreshold: 1
           timeoutSeconds: 2
         - name: etcd
-          image: {{ .Values.etcd-image }}
+          image: {{ .Values.etcdImage }}
           imagePullPolicy: {{ .Values.imagePullPolicy }}
