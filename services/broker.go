@@ -90,6 +90,8 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 			return nil, errors.New("Parameters need to be provided \\'connect_uri\\'")
 		}
 		logs.Info("Parameters \"connect_uri\" : ", connectURI)
+		logs.Info("Parameters \"serviceId\" : ", req.ServiceID)
+		logs.Info("Parameters \"planID\" : ", req.PlanID)
 
 		plan := getEqualPlan(req.ServiceID, req.PlanID)
 		if plan == nil {
