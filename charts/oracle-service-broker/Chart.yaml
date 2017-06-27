@@ -1,12 +1,3 @@
 name: oracle-service-broker
 description: user-provided oracle-service-broker deployment Helm chart.
-home: http://www.neunn.com
-icon: http://orvjyath1.bkt.clouddn.com/oracle.jpg
-maintainers:
-- email: zhaozy@neunn.com
-  name: www.neunn.com
-sources:
-- https://www.neunn.com
 version: 0.0.2
-engine: gotpl
-
