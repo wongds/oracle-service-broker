@@ -87,7 +87,7 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 		logs.Info("Parameters \"plan_name\" : ", planName)
 
 
-		plan := getEqualPlan(serviceName, serviceName)
+		plan := getEqualPlan(serviceName.(string), planName.(string))
 		if plan == nil {
 			return nil, errors.New("Plan not found.Please select corrected plan.")
 		}
