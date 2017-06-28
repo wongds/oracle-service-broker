@@ -179,17 +179,8 @@ func (o *OracleServiceBroker) DeProvision(id string) (*brokerapi.DeleteServiceIn
 		if err != nil {
 			return nil, errors.New("CRUD - Delete database and user error.")
 		}
-		client := GetEtcdClientInstance()
-		if client == nil {
-			return nil, errors.New("Create etcd client instance failure.")
-		}
 
 		//delete(o.instanceMap, id)
-
-		client = GetEtcdClientInstance()
-		if client == nil {
-			return nil, errors.New("Create etcd client instance failure.")
-		}
 		client.Delete("/serviceinstance/" + id)
 
 		return &brokerapi.DeleteServiceInstanceResponse{
