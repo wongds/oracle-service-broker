@@ -6,3 +6,6 @@ imagePullPolicy: IfNotPresent
 
 # Etcd Image to use
 etcdImage: quay.io/coreos/etcd:v3.0.17
+
+# Etcd StorageClass
+storageClass: neunn-nfs

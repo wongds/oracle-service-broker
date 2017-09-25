@@ -12,6 +12,5 @@ swagger/swagger.yml
 
 # beego
 routers/commentsRouter_controllers.go
-oracle-service-broker
 oracle-service-broker.exe
 lastupdate.tmp

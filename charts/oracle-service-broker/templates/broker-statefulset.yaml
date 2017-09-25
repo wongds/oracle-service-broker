@@ -1,5 +1,5 @@
-kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta1
+kind: StatefulSet
 metadata:
   name: {{ template "fullname" . }}
   labels:
@@ -8,10 +8,8 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
+  serviceName: {{ template "fullname" . }}
   replicas: 1
-  selector:
-    matchLabels:
-      app: {{ template "fullname" . }}
   template:
     metadata:
       labels:
@@ -45,3 +43,16 @@ spec:
       - name: etcd
         image: {{ .Values.etcdImage }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
+        volumeMounts:
+        - name: data
+          mountPath: /default.etcd
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+      annotations:
+        volume.beta.kubernetes.io/storage-class: {{ .Values.storageClass }}
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
