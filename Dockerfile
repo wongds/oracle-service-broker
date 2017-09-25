@@ -1,4 +1,4 @@
-FROM neunnsy/oracle-service-broker:11.2
+FROM neunnsy/oracle-service-broker-base:11.2
 
 MAINTAINER zhaozy@neunn.com
 
