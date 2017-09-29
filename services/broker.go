@@ -216,6 +216,10 @@ func (o *OracleServiceBroker) Binding(instanceID, bindingID string, req *brokera
 	//	return nil, errors.New("no such instance: " + instanceID)
 	//}
 	//cred := instance.Credential
+	// remove connect_uri from service instance credential.
+	credential := serviceInstance.Credential
+	delete(*credential, "connect_uri")
+	serviceInstance.Credential = credential
 	return &brokerapi.CreateServiceBindingResponse{
 		Credentials: *(serviceInstance.Credential),
 	}, nil
