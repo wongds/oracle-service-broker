@@ -6,6 +6,7 @@ import (
 	"github.com/compassorg/oracle-service-broker/services"
 
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 )
 
 // Operations about Catalogs
@@ -20,6 +21,7 @@ type CatalogsController struct {
 // @Failure 500 {object} error
 // @router / [get]
 func (c *CatalogsController) Catalogs() {
+	logs.Info("Invoke Oracle Service Broker API Reques Header : ", c.Ctx.Request.Header)
 	catalog := services.OracleServiceBrokerInstance().Catalog()
 
 	writeCatalogResponse(c, http.StatusOK, catalog)

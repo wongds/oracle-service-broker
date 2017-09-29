@@ -129,6 +129,25 @@ func deleteDatabaseAndUser(conn, database, username string) error {
 		return err
 	}
 
+	rows, err := db.Query(fmt.Sprintf("select sid,serial# from v$session where username='%s'", strings.ToUpper(username)))
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+	println("get user session list :", fmt.Sprintf("select sid,serial# from v$session where username='%s'", strings.ToUpper(username)))
+	for rows.Next() {
+		sid := ""
+		serial := ""
+		err := rows.Scan(&sid, &serial)
+		if err != nil {
+			return err
+		}
+		_, err = db.Query(fmt.Sprintf("alter system kill session '%s,%s'", sid, serial))
+		if err != nil {
+			return err
+		}
+		println("kill user session : ", fmt.Sprintf("alter system kill session '%s,%s'", sid, serial))
+	}
 	_, errDropUser := db.Query(fmt.Sprintf("drop user %s cascade", username))
 	if errDropUser == nil {
 		println("user", username, "was dropped")
