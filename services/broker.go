@@ -30,16 +30,16 @@ func (o *OracleServiceBroker) Catalog() *brokerapi.Catalog {
 	return readBrokerSettings()
 }
 
-func (o *OracleServiceBroker) ServiceInstance(id string) (string, error) {
-	result := ""
+func (o *OracleServiceBroker) ServiceInstance(id string) (userProvidedServiceInstance, error) {
+	result := userProvidedServiceInstance{}
 
 	client := GetEtcdClientInstance()
 	if client == nil {
-		return "", errors.New("Create etcd client instance failure.")
+		return result, errors.New("Create etcd client instance failure.")
 	}
 	response, err := client.Get("/serviceinstance/" + id)
 	if err != nil {
-		return "", errors.New("Get instance failre. The instance id is " + id)
+		return result, errors.New("Get instance failre. The instance id is " + id)
 	}
 	var serviceInstance userProvidedServiceInstance
 	json.Unmarshal([]byte(response.Node.Value), &serviceInstance)
@@ -48,7 +48,7 @@ func (o *OracleServiceBroker) ServiceInstance(id string) (string, error) {
 		ok = false
 	}
 	if ok {
-		result = id
+		result = serviceInstance
 	}
 
 	return result, nil
