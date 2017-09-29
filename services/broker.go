@@ -4,16 +4,17 @@ import (
 	"encoding/json"
 	"errors"
 	"strings"
-	"time"
 
 	"github.com/golang/glog"
 	"github.com/kubernetes-incubator/service-catalog/pkg/brokerapi"
 
 	"github.com/astaxie/beego/logs"
+	"time"
 )
 
 var (
 	oracleServiceBroker *OracleServiceBroker
+	lastOperationMap    map[string]int64
 )
 
 type OracleServiceBroker struct {
@@ -22,6 +23,7 @@ type OracleServiceBroker struct {
 func OracleServiceBrokerInstance() *OracleServiceBroker {
 	if oracleServiceBroker == nil {
 		oracleServiceBroker = &OracleServiceBroker{}
+		lastOperationMap = make(map[string]int64)
 	}
 	return oracleServiceBroker
 }
@@ -241,57 +243,62 @@ func (o *OracleServiceBroker) ServiceInstanceLastOperation(instanceID, serviceID
 	if client == nil {
 		return nil, errors.New("Create etcd client instance failure.")
 	}
-
+Loop:
 	switch lower {
 	case "provision":
 		_, err := client.Get("/serviceinstance/" + instanceID)
-	LOOP0:
-		for {
-			select {
-			case <-time.After(10 * time.Second):
+
+		if _, exist := lastOperationMap["provision"+instanceID]; exist {
+			// key found.
+			timeBefore := lastOperationMap["provision"+instanceID]
+			duration := time.Now().Unix() - timeBefore
+			if duration > 10 {
 				if err != nil {
-					result.State = "failed"
-					result.Description = "Provision with instance " + instanceID + " failed."
+					result.State = "faild"
+					result.Description = "Provision with instance " + instanceID + " faild)."
 				} else {
 					result.State = "succeeded"
 					result.Description = "Provision with instance " + instanceID + " successed."
 				}
-				break LOOP0
-			default:
-				if err != nil {
-					result.State = "in progress"
-					result.Description = "Provision with instance " + instanceID + " (10% complete)."
-				} else {
-					result.State = "succeeded"
-					result.Description = "Provision with instance " + instanceID + " successed."
-					break LOOP0
-				}
+				delete(lastOperationMap, "provision"+instanceID)
+				break Loop
 			}
+		}
+
+		if err != nil {
+			result.State = "in progress"
+			result.Description = "Provision with instance " + instanceID + " (10% complete)."
+			lastOperationMap["provision"+instanceID] = time.Now().Unix()
+		} else {
+			result.State = "succeeded"
+			result.Description = "Provision with instance " + instanceID + " successed."
 		}
 	case "deprovision":
 		_, err := client.Get("/serviceinstance/" + instanceID)
-	LOOP1:
-		for {
-			select {
-			case <-time.After(10 * time.Second):
+		if _, exist := lastOperationMap["deprovision"+instanceID]; exist {
+			// key found.
+			timeBefore := lastOperationMap["deprovision"+instanceID]
+			duration := time.Now().Unix() - timeBefore
+			if duration > 10 {
 				if err != nil {
 					result.State = "succeeded"
 					result.Description = "DeProvision with instance " + instanceID + " successed."
 				} else {
-					result.State = "failed"
-					result.Description = "DeProvision with instance " + instanceID + " failed."
+					result.State = "faild"
+					result.Description = "DeProvision with instance " + instanceID + " faild."
 				}
-				break LOOP1
-			default:
-				if err != nil {
-					result.State = "succeeded"
-					result.Description = "DeProvision with instance " + instanceID + " successed."
-					break LOOP1
-				} else {
-					result.State = "in progress"
-					result.Description = "DeProvision with instance " + instanceID + " (10% complete)."
-				}
+				delete(lastOperationMap, "deprovision"+instanceID)
+				break Loop
 			}
+		}
+
+		if err != nil {
+			result.State = "succeeded"
+			result.Description = "DeProvision with instance " + instanceID + " successed."
+		} else {
+			result.State = "in progress"
+			result.Description = "DeProvision with instance " + instanceID + " (10% complete)."
+			lastOperationMap["deprovision"+instanceID] = time.Now().Unix()
 		}
 	case "update":
 		result.State = "succeeded"
