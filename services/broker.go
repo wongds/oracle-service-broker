@@ -35,11 +35,11 @@ func (o *OracleServiceBroker) ServiceInstance(id string) (userProvidedServiceIns
 
 	client := GetEtcdClientInstance()
 	if client == nil {
-		return "", errors.New("Create etcd client instance failure.")
+		return result, errors.New("Create etcd client instance failure.")
 	}
 	response, err := client.Get("/serviceinstance/" + id)
 	if err != nil {
-		return "", errors.New("Get instance failre. The instance id is " + id)
+		return result, errors.New("Get instance failre. The instance id is " + id)
 	}
 	var serviceInstance userProvidedServiceInstance
 	json.Unmarshal([]byte(response.Node.Value), &serviceInstance)
