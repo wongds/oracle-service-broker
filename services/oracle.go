@@ -68,7 +68,7 @@ func createDatabaseAndUser(conn string, tableSpace string, bigFile bool) (string
 	newUsername := "u" + generateGuid()[0:15]
 	newPassword := "p" + generateGuid()[0:15]
 
-	sqlCreateUser := fmt.Sprintf(`CREATE USER %s IDENTIFIED BY %s`, newUsername, newPassword)
+	sqlCreateUser := fmt.Sprintf(`CREATE USER %s IDENTIFIED BY %s DEFAULT TABLESPACE %s`, newUsername, newPassword, databaseName)
 
 	println(sqlCreateUser)
 
@@ -92,7 +92,7 @@ func createDatabaseAndUser(conn string, tableSpace string, bigFile bool) (string
 		println("bind failed: drop user", newUsername, "succeeded.")
 	}()
 
-	sqlAlterUser := fmt.Sprintf(`ALTER USER %s quota unlimited on %s`, newUsername, databaseName)
+	sqlAlterUser := fmt.Sprintf(`ALTER USER %s quota %s on %s`, newUsername, tableSpace, databaseName)
 	println("alter user: ", sqlAlterUser)
 	_, err = db.Query(sqlAlterUser)
 	if err != nil {
