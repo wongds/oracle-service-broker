@@ -30,8 +30,8 @@ func (o *OracleServiceBroker) Catalog() *brokerapi.Catalog {
 	return readBrokerSettings()
 }
 
-func (o *OracleServiceBroker) ServiceInstance(id string) (string, error) {
-	result := ""
+func (o *OracleServiceBroker) ServiceInstance(id string) (userProvidedServiceInstance, error) {
+	result := userProvidedServiceInstance{}
 
 	client := GetEtcdClientInstance()
 	if client == nil {
@@ -48,7 +48,7 @@ func (o *OracleServiceBroker) ServiceInstance(id string) (string, error) {
 		ok = false
 	}
 	if ok {
-		result = id
+		result = serviceInstance
 	}
 
 	return result, nil
