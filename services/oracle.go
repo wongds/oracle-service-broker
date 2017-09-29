@@ -134,6 +134,7 @@ func deleteDatabaseAndUser(conn, database, username string) error {
 		return err
 	}
 	defer rows.Close()
+	println("get user session list :", fmt.Sprintf("select sid,serial# from v$session where username='%s'", strings.ToUpper(username)))
 	for rows.Next() {
 		sid := ""
 		serial := ""
@@ -145,6 +146,7 @@ func deleteDatabaseAndUser(conn, database, username string) error {
 		if err != nil {
 			return err
 		}
+		println("kill user session : ", fmt.Sprintf("alter system kill session '%s,%s'", sid, serial))
 	}
 	_, errDropUser := db.Query(fmt.Sprintf("drop user %s cascade", username))
 	if errDropUser == nil {
