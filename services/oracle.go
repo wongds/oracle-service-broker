@@ -6,12 +6,15 @@ import (
 	"database/sql"
 
 	_ "github.com/mattn/go-oci8"
+	"github.com/astaxie/beego/logs"
 )
 
 // create oracle database and database user.
 // grant user to database
 // return databaseName, userName, userPassword, error.
 func createDatabaseAndUser(conn string, tableSpace string, bigFile bool) (string, string, string, error) {
+	logs.Info("The plan value is ", tableSpace)
+
 	var bindSucceeded = false
 
 	db, err := sql.Open("oci8", conn)

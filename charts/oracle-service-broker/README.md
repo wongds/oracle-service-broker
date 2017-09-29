@@ -20,7 +20,8 @@
 	"values": {
 		"image": "neunnsy/oracle-service-broker:v0.0.2",
 		"imagePullPolicy": "IfNotPresent",
-		"etcdImage": "quay.io/coreos/etcd:v3.0.17"
+		"etcdImage": "quay.io/coreos/etcd:v3.0.17",
+		"storageClass": "neunn-nfs"
 	}
 }
 
@@ -35,4 +36,5 @@
 | `image` | 镜像 | `neunnsy/oracle-service-broker:v0.0.2` |
 | `imagePullPolicy` | 镜像拉取规则 | `Always` |
 |`etcdImage`|etcd镜像|`quay.io/coreos/etcd:v3.0.17`|
+|`storageClass`|StorageClass名字|`neunn-nfs`|
 
