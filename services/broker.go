@@ -4,12 +4,12 @@ import (
 	"encoding/json"
 	"errors"
 	"strings"
+	"time"
 
 	"github.com/golang/glog"
 	"github.com/kubernetes-incubator/service-catalog/pkg/brokerapi"
 
 	"github.com/astaxie/beego/logs"
-	"time"
 )
 
 var (
@@ -268,7 +268,9 @@ Loop:
 		if err != nil {
 			result.State = "in progress"
 			result.Description = "Provision with instance " + instanceID + " (10% complete)."
-			lastOperationMap["provision"+instanceID] = time.Now().Unix()
+			if _, exist := lastOperationMap["provision"+instanceID]; !exist {
+				lastOperationMap["provision"+instanceID] = time.Now().Unix()
+			}
 		} else {
 			result.State = "succeeded"
 			result.Description = "Provision with instance " + instanceID + " successed."
@@ -298,7 +300,9 @@ Loop:
 		} else {
 			result.State = "in progress"
 			result.Description = "DeProvision with instance " + instanceID + " (10% complete)."
-			lastOperationMap["deprovision"+instanceID] = time.Now().Unix()
+			if _, exist := lastOperationMap["deprovision"+instanceID]; !exist {
+				lastOperationMap["deprovision"+instanceID] = time.Now().Unix()
+			}
 		}
 	case "update":
 		result.State = "succeeded"
