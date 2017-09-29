@@ -2,9 +2,9 @@ package services
 
 import (
 	"encoding/json"
-	"time"
 	"errors"
 	"strings"
+	"time"
 
 	"github.com/golang/glog"
 	"github.com/kubernetes-incubator/service-catalog/pkg/brokerapi"
@@ -246,47 +246,51 @@ func (o *OracleServiceBroker) ServiceInstanceLastOperation(instanceID, serviceID
 	case "provision":
 		_, err := client.Get("/serviceinstance/" + instanceID)
 	LOOP0:
-		select {
-		case <-time.After(10 * time.Second):
-			if err != nil {
-				result.State = "failed"
-				result.Description = "Provision with instance " + instanceID + " failed."
-			} else {
-				result.State = "succeeded"
-				result.Description = "Provision with instance " + instanceID + " successed."
-			}
-			break LOOP0
-		default:
-			if err != nil {
-				result.State = "in progress"
-				result.Description = "Provision with instance " + instanceID + " (10% complete)."
-			} else {
-				result.State = "succeeded"
-				result.Description = "Provision with instance " + instanceID + " successed."
+		for {
+			select {
+			case <-time.After(10 * time.Second):
+				if err != nil {
+					result.State = "failed"
+					result.Description = "Provision with instance " + instanceID + " failed."
+				} else {
+					result.State = "succeeded"
+					result.Description = "Provision with instance " + instanceID + " successed."
+				}
 				break LOOP0
+			default:
+				if err != nil {
+					result.State = "in progress"
+					result.Description = "Provision with instance " + instanceID + " (10% complete)."
+				} else {
+					result.State = "succeeded"
+					result.Description = "Provision with instance " + instanceID + " successed."
+					break LOOP0
+				}
 			}
 		}
 	case "deprovision":
 		_, err := client.Get("/serviceinstance/" + instanceID)
 	LOOP1:
-		select {
-		case <-time.After(10 * time.Second):
-			if err != nil {
-				result.State = "succeeded"
-				result.Description = "DeProvision with instance " + instanceID + " successed."
-			} else {
-				result.State = "failed"
-				result.Description = "DeProvision with instance " + instanceID + " failed."
-			}
-			break LOOP1
-		default:
-			if err != nil {
-				result.State = "succeeded"
-				result.Description = "DeProvision with instance " + instanceID + " successed."
+		for {
+			select {
+			case <-time.After(10 * time.Second):
+				if err != nil {
+					result.State = "succeeded"
+					result.Description = "DeProvision with instance " + instanceID + " successed."
+				} else {
+					result.State = "failed"
+					result.Description = "DeProvision with instance " + instanceID + " failed."
+				}
 				break LOOP1
-			} else {
-				result.State = "in progress"
-				result.Description = "DeProvision with instance " + instanceID + " (10% complete)."
+			default:
+				if err != nil {
+					result.State = "succeeded"
+					result.Description = "DeProvision with instance " + instanceID + " successed."
+					break LOOP1
+				} else {
+					result.State = "in progress"
+					result.Description = "DeProvision with instance " + instanceID + " (10% complete)."
+				}
 			}
 		}
 	case "update":
