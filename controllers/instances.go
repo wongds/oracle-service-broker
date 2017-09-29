@@ -5,8 +5,8 @@ import (
 
 	"github.com/compassorg/oracle-service-broker/services"
 
-	"github.com/golang/glog"
 	"github.com/astaxie/beego"
+	"github.com/golang/glog"
 	"github.com/kubernetes-incubator/service-catalog/pkg/brokerapi"
 )
 
@@ -67,7 +67,6 @@ func (i *InstancesController) Provision() {
 		writeErrResponse(i, http.StatusBadRequest, err)
 	}
 }
-
 
 // @Title DeProvision service instance.
 // @Description DeProvision service instance with instanceId.
@@ -149,6 +148,31 @@ func (i *InstancesController) UnBinding() {
 	}
 }
 
+// @Title Get instance last operation with instanceID.
+// @Description Get service instance with instanceID.
+// @Param instance_id path string true "Instance id."
+// @Param service_id query string true "Service id."
+// @Param plan_id query string true "Plan id."
+// @Param operation query string true "Operation."
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} error
+// @Failure 500 {object} error
+// @router /:instance_id/last_operation [get]
+func (i *InstancesController) ServiceInstanceLastOperation() {
+	instanceId := i.GetString(":instance_id")
+	serviceId := i.GetString("service_id")
+	planId := i.GetString("plan_id")
+	operation := i.GetString("operation")
+
+	glog.Infof("Get service instance last opertaion %s...\n", instanceId)
+
+	if result, err := services.OracleServiceBrokerInstance().ServiceInstanceLastOperation(instanceId, serviceId, planId, operation); err == nil {
+		writeResponse(i, http.StatusOK, result)
+	} else {
+		writeErrResponse(i, http.StatusBadRequest, err)
+	}
+}
+
 // WriteResponse will serialize 'object' to the HTTP ResponseWriter
 // using the 'code' as the HTTP status code
 func writeResponse(i *InstancesController, code int, object interface{}) {
@@ -157,7 +181,6 @@ func writeResponse(i *InstancesController, code int, object interface{}) {
 	i.Data["json"] = object
 	i.ServeJSON()
 }
-
 
 // WriteResponse will serialize 'object' to the HTTP ResponseWriter
 // using the 'code' as the HTTP status code

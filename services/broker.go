@@ -8,6 +8,8 @@ import (
 	"github.com/kubernetes-incubator/service-catalog/pkg/brokerapi"
 
 	"github.com/astaxie/beego/logs"
+	"strings"
+	"time"
 )
 
 var (
@@ -19,8 +21,7 @@ type OracleServiceBroker struct {
 
 func OracleServiceBrokerInstance() *OracleServiceBroker {
 	if oracleServiceBroker == nil {
-		oracleServiceBroker = &OracleServiceBroker{
-		}
+		oracleServiceBroker = &OracleServiceBroker{}
 	}
 	return oracleServiceBroker
 }
@@ -85,7 +86,6 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 		logs.Info("Parameters \"connect_uri\" : ", connectURI)
 		logs.Info("Parameters \"service_name\" : ", serviceName)
 		logs.Info("Parameters \"plan_name\" : ", planName)
-
 
 		plan := getEqualPlan(serviceName.(string), planName.(string))
 		if plan == nil {
@@ -224,4 +224,79 @@ func (o *OracleServiceBroker) Binding(instanceID, bindingID string, req *brokera
 func (o *OracleServiceBroker) UnBinding(instanceId, bindingId string) error {
 	// Since we don't persist the binding, there's nothing to do here.
 	return nil
+}
+
+func (o *OracleServiceBroker) ServiceInstanceLastOperation(instanceID, serviceID, planID, operation string) (*brokerapi.LastOperationResponse, error) {
+	lower := strings.ToLower(operation)
+
+	result := &brokerapi.LastOperationResponse{}
+
+	client := GetEtcdClientInstance()
+	if client == nil {
+		return nil, errors.New("Create etcd client instance failure.")
+	}
+
+	switch lower {
+	case "provision":
+		ticker := time.NewTicker(10 * time.Second)
+		defer func() {
+			ticker.Stop()
+		}()
+		for {
+			_, err := client.Get("/serviceinstance/" + instanceID)
+			select {
+			case <-ticker.C:
+				if err != nil {
+					result.State = "failed"
+					result.Description = "Provision with instance " + instanceID + " failed."
+				} else {
+					result.State = "succeeded"
+					result.Description = "Provision with instance " + instanceID + " successed."
+				}
+			default:
+				if err != nil {
+					result.State = "in progress"
+					result.Description = "Provision with instance " + instanceID + " (10% complete)."
+				} else {
+					result.State = "succeeded"
+					result.Description = "Provision with instance " + instanceID + " successed."
+					ticker.Stop()
+				}
+			}
+		}
+	case "deprovision":
+		ticker := time.NewTicker(10 * time.Second)
+		defer func() {
+			ticker.Stop()
+		}()
+		for {
+			_, err := client.Get("/serviceinstance/" + instanceID)
+			select {
+			case <-ticker.C:
+				if err != nil {
+					result.State = "succeeded"
+					result.Description = "DeProvision with instance " + instanceID + " successed."
+				} else {
+					result.State = "failed"
+					result.Description = "DeProvision with instance " + instanceID + " failed."
+				}
+			default:
+				if err != nil {
+					result.State = "succeeded"
+					result.Description = "DeProvision with instance " + instanceID + " successed."
+					ticker.Stop()
+				} else {
+					result.State = "in progress"
+					result.Description = "DeProvision with instance " + instanceID + " (10% complete)."
+				}
+			}
+		}
+	case "update":
+		result.State = "succeeded"
+		result.Description = "Update with instance " + instanceID + " successed."
+	default:
+		return nil, errors.New("Unimplemented")
+	}
+
+	return result, nil
 }
