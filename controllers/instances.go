@@ -104,6 +104,7 @@ func (i *InstancesController) DeProvision() {
 // @Failure 500 {object} error
 // @router /:instance_id/service_bindings/:binding_id [put]
 func (i *InstancesController) Binding() {
+	logs.Info("Invoke Oracle Service Broker API Reques Header : ", i.Ctx.Request.Header)
 	instanceId := i.GetString(":instance_id")
 	bindingId := i.GetString(":binding_id")
 
