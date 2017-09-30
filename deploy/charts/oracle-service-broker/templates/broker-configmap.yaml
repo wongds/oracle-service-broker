@@ -3,6 +3,15 @@ kind: ConfigMap
 metadata:
   name: {{ template "fullname" . }}
 data:
+  app.conf: |+
+    appname = oracle-service-broker
+    httpport = 8000
+    runmode = dev
+    autorender = false
+    copyrequestbody = true
+    EnableDocs = true
+
+    include "oracle-service-broker.conf"
   oracle-service-broker.conf: |+
     [oracle-service-broker]
     settings.path="conf/settings.yaml"
@@ -14,3 +23,30 @@ data:
     [auth]
     username="{{ .Values.brokerAuthInfo.username }}"
     password="{{ .Values.brokerAuthInfo.password }}"
+  settings.yaml:  |+
+    services:
+    - name: oracle-service
+      id: 3102c871-1044-4716-a7dc-9ded2e028279
+      description: Oracle service for application development and testing
+      bindable: true
+      tags:
+        - oracle
+        - relational
+      metadata:
+        providerDisplayName: experimental
+        imageUrl: http://orvjyath1.bkt.clouddn.com/oracle.jpg
+        longDescription: Oracle service for application development and testing
+      plans:
+      - name: default
+        id: 2651da21-dc16-4c1a-ba6c-1c681a3dcdc1
+        description: Shared Oracle Server
+        free: true
+        bindable: true
+        metadata:
+         costs:
+         - amount:
+             value: 100.0
+           unit: M
+         bullets:
+           - Shared Oracle server
+           - free storage
