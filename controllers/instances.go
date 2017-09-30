@@ -6,6 +6,7 @@ import (
 	"github.com/compassorg/oracle-service-broker/services"
 
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 	"github.com/golang/glog"
 	"github.com/kubernetes-incubator/service-catalog/pkg/brokerapi"
 )
@@ -23,6 +24,7 @@ type InstancesController struct {
 // @Failure 500 {object} error
 // @router /:instance_id [get]
 func (i *InstancesController) Instance() {
+	logs.Info("Invoke Oracle Service Broker API Reques Header : ", i.Ctx.Request.Header)
 	instanceId := i.GetString(":instance_id")
 
 	glog.Infof("Get service instance %s...\n", instanceId)
@@ -43,6 +45,7 @@ func (i *InstancesController) Instance() {
 // @Failure 500 {object} error
 // @router /:instance_id [put]
 func (i *InstancesController) Provision() {
+	logs.Info("Invoke Oracle Service Broker API Reques Header : ", i.Ctx.Request.Header)
 	instanceId := i.GetString(":instance_id")
 
 	glog.Infof("Provision service instance %s...\n", instanceId)
@@ -76,6 +79,7 @@ func (i *InstancesController) Provision() {
 // @Failure 500 {object} error
 // @router /:instance_id [delete]
 func (i *InstancesController) DeProvision() {
+	logs.Info("Invoke Oracle Service Broker API Reques Header : ", i.Ctx.Request.Header)
 	instanceId := i.GetString(":instance_id")
 
 	glog.Infof("DeProvision service instance %s...\n", instanceId)
@@ -136,6 +140,7 @@ func (i *InstancesController) Binding() {
 // @Failure 500 {object} error
 // @router /:instance_id/service_bindings/:binding_id [delete]
 func (i *InstancesController) UnBinding() {
+	logs.Info("Invoke Oracle Service Broker API Reques Header : ", i.Ctx.Request.Header)
 	instanceId := i.GetString(":instance_id")
 	bindingId := i.GetString(":binding_id")
 
@@ -159,6 +164,7 @@ func (i *InstancesController) UnBinding() {
 // @Failure 500 {object} error
 // @router /:instance_id/last_operation [get]
 func (i *InstancesController) ServiceInstanceLastOperation() {
+	logs.Info("Invoke Oracle Service Broker API Reques Header : ", i.Ctx.Request.Header)
 	instanceId := i.GetString(":instance_id")
 	serviceId := i.GetString("service_id")
 	planId := i.GetString("plan_id")
