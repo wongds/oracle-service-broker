@@ -43,16 +43,16 @@ spec:
         volumeMounts:
         - name: {{ template "fullname" . }}
           mountPath: /go/src/github.com/compassorg/oracle-service-broker/conf/oracle-service-broker.conf
-      volumes:
-      - name: {{ template "fullname" . }}
-        configMap:
-          name: {{ template "fullname" . }}
       - name: etcd
         image: {{ .Values.etcdImage }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
         volumeMounts:
         - name: data
           mountPath: /default.etcd
+      volumes:
+      - name: {{ template "fullname" . }}
+        configMap:
+          name: {{ template "fullname" . }}
   volumeClaimTemplates:
   - metadata:
       name: data
