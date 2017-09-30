@@ -47,9 +47,6 @@ spec:
       - name: oracle-service-broker
         configMap:
           name: oracle-service-broker
-          items:
-            - key: oracle-service-broker.conf
-              path: oracle-service-broker.conf
   volumeClaimTemplates:
   - metadata:
       name: data
