@@ -62,6 +62,9 @@ func (o *OracleServiceBroker) Provision(id string, req *brokerapi.CreateServiceI
 
 	credential, ok := req.Parameters["credentials"]
 
+	logs.Info("ContextProfile.Namespace: ", req.ContextProfile.Namespace)
+	logs.Info("ContextProfile.Platform: ", req.ContextProfile.Platform)
+
 	if !ok {
 		return nil, errors.New("Parameters need to be provided \\'credential\\'")
 	} else {
