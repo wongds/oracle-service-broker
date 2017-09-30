@@ -37,10 +37,10 @@ spec:
         volumeMounts:
         - name: oracle-service-broker
           mountPath: /go/src/github.com/compassorg/oracle-service-broker/conf/oracle-service-broker.conf
-        volumes:
-        - name: oracle-service-broker
-          configMap:
-            name: oracle-service-broker
+      volumes:
+      - name: oracle-service-broker
+        configMap:
+          name: oracle-service-broker
       - name: etcd
         image: quay.io/coreos/etcd:v3.0.17
         imagePullPolicy: IfNotPresent
