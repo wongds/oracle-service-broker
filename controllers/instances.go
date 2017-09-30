@@ -17,6 +17,7 @@ type InstancesController struct {
 
 // @Title Get instance with instanceID.
 // @Description Get service instance with instanceID.
+// @Param    Authorization        header     string    "Basic token"    true    "Authorization information."
 // @Param instance_id path string true "Instance id."
 // @Success 200 {object} map[string]string
 // @Failure 400 {object} error
@@ -36,6 +37,7 @@ func (i *InstancesController) Instance() {
 
 // @Title Provision service instance.
 // @Description Provision service instance with serviceClass & plan.
+// @Param    Authorization        header     string    "Basic token"    true    "Authorization information."
 // @Param instance_id path string true "Instance id."
 // @Param body body brokerapi.CreateServiceInstanceRequest true "Request Body."
 // @Success 200 {object} map[string]string
@@ -70,6 +72,7 @@ func (i *InstancesController) Provision() {
 
 // @Title DeProvision service instance.
 // @Description DeProvision service instance with instanceId.
+// @Param    Authorization        header     string    "Basic token"    true    "Authorization information."
 // @Param instance_id path string true "Instance id."
 // @Success 200 {object} map[string]string
 // @Failure 400 {object} error
@@ -89,6 +92,7 @@ func (i *InstancesController) DeProvision() {
 
 // @Title Binding service instance.
 // @Description Binding service instance with instanceId and bindingId.
+// @Param    Authorization        header     string    "Basic token"    true    "Authorization information."
 // @Param instance_id path string true "Instance id."
 // @Param binding_id path string true "Binding id."
 // @Success 200 {object} map[string]string
@@ -129,6 +133,7 @@ func (i *InstancesController) Binding() {
 
 // @Title UnBinding service instance.
 // @Description UnBinding service instance with instanceId and bindingId.
+// @Param    Authorization        header     string    "Basic token"    true    "Authorization information."
 // @Param instance_id path string true "Instance id."
 // @Param binding_id path string true "Binding id."
 // @Success 200 {object} map[string]string
@@ -150,6 +155,7 @@ func (i *InstancesController) UnBinding() {
 
 // @Title Get instance last operation with instanceID.
 // @Description Get service instance with instanceID.
+// @Param    Authorization        header     string    "Basic token"    true    "Authorization information."
 // @Param instance_id path string true "Instance id."
 // @Param service_id query string true "Service id."
 // @Param plan_id query string true "Plan id."
