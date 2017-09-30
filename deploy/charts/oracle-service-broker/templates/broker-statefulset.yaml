@@ -42,7 +42,7 @@ spec:
           timeoutSeconds: 2
         volumeMounts:
         - name: {{ template "fullname" . }}
-          mountPath: /go/src/github.com/compassorg/oracle-service-broker/conf/oracle-service-broker.conf
+          mountPath: /go/src/github.com/compassorg/oracle-service-broker/conf
       - name: etcd
         image: {{ .Values.etcdImage }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
