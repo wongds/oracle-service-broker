@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "fullname" . }}
+data:
+  oracle-service-broker.conf: |+
+    [oracle-service-broker]
+    settings.path="conf/settings.yaml"
+
+    [etcd]
+    endpoints="http://127.0.0.1:2379"
+    # For multi endpoints. endpoints="http://192.168.86.131:2379,http://192.168.86.132:2379,http://192.168.86.133:2379"
+
+    [auth]
+    username="{{ .Values.brokerAuthInfo.username }}"
+    password="{{ .Values.brokerAuthInfo.password }}"
