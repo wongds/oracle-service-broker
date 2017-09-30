@@ -16,6 +16,7 @@ type CatalogsController struct {
 
 // @Title List broker catalogs.
 // @Description List broker catalogs and association plans.
+// @Param    Authorization        header     string    "Basic token"    true    "Authorization information."
 // @Success 200 {object} map[string]string
 // @Failure 400 {object} error
 // @Failure 500 {object} error
