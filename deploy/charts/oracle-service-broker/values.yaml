@@ -12,5 +12,5 @@ storageClass: neunn-nfs
 
 # Broker Auth Info
 brokerAuthInfo:
-  username: suyan
-  password: 12345678
+  username: "suyan"
+  password: "12345678"
