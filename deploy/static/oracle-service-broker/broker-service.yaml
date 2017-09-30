@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: oracle-service-broker
+  labels:
+    app: oracle-service-broker
+spec:
+  selector:
+    app: oracle-service-broker
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000

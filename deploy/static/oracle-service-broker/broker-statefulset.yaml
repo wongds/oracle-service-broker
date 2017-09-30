@@ -1,0 +1,59 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: oracle-service-broker
+  labels:
+    app: oracle-service-broker
+spec:
+  serviceName: oracle-service-broker
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: oracle-service-broker
+    spec:
+      containers:
+      - name: oracle-service-broker
+        image: neunnsy/oracle-service-broker:v0.0.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        readinessProbe:
+          tcpSocket:
+            port: 8000
+          failureThreshold: 1
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        livenessProbe:
+          tcpSocket:
+            port: 8000
+          failureThreshold: 3
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        volumeMounts:
+        - name: oracle-service-broker
+          mountPath: /go/src/github.com/compassorg/oracle-service-broker/conf/oracle-service-broker.conf
+        volumes:
+        - name: oracle-service-broker
+          configMap:
+            name: oracle-service-broker
+      - name: etcd
+        image: quay.io/coreos/etcd:v3.0.17
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: data
+          mountPath: /default.etcd
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+      annotations:
+        volume.beta.kubernetes.io/storage-class: standard
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
