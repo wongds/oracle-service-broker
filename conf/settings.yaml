@@ -13,6 +13,8 @@ services:
   metadata:
     providerDisplayName: experimental
     imageUrl: http://orvjyath1.bkt.clouddn.com/oracle.jpg
+    # serviceType: database cache message-queue
+    serviceType: database
     longDescription: Oracle service for application development and testing
   plans:
   - name: default
