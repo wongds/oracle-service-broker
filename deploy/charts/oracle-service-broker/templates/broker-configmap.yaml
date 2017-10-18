@@ -41,7 +41,38 @@ data:
         imageUrl: http://orvjyath1.bkt.clouddn.com/oracle.jpg
         # serviceType: database cache message-queue
         serviceType: database
-        longDescription: Oracle service for application development and testing
+        longDescription: |
+          # Oracle Service Broker Description
+
+          用于对接外部Oracle集群服务,遵守ServiceBroker API规范.
+          [Open Service Broker](https://www.openservicebrokerapi.org/)
+
+
+          更多信息,
+          [请访问 GitHub 上 Service Catalog 项目](https://github.com/kubernetes-incubator/service-catalog).
+        basicInformation: |
+          # Oracle Service Broker Basic Information
+
+          用于对接外部Oracle集群服务,遵守ServiceBroker API规范.
+          [Open Service Broker](https://www.openservicebrokerapi.org/)
+
+
+          更多信息,
+          [请访问 GitHub 上 Service Catalog 项目](https://github.com/kubernetes-incubator/service-catalog).
+        configParam: |
+          ## 配置参数描述
+          ```
+          service_name: 服务的名字
+          plan_name: 套餐的名字
+          connect_uri: 数据库链接字符串
+          ```
+        howToUse: |
+          ## 参数使用说明
+          ```
+          service_name: oracle-service
+          plan_name: default
+          connect_uri: system/123456@192.168.250.37:1521/orcl
+          ```
       plans:
       - name: default
         id: 2651da21-dc16-4c1a-ba6c-1c681a3dcdc1
